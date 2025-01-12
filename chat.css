@@ -165,7 +165,6 @@ h2 {
     color: #fff;
     cursor: pointer;
     font-size: 20px;
-    background-color: #2a2a2a;
     border-radius: 50%;
     width: 32px;
     height: 32px;
@@ -176,7 +175,7 @@ h2 {
 }
 
 #send-button {
-    color: #fff;
+    color: #07080a;
     cursor: pointer;
     font-size: 20px;
     background-color: #757b7b;
@@ -191,8 +190,8 @@ h2 {
 }
 
 #send-button.has-text {
-    background-color: #ffffff;
-    color: #15151f;
+    background-color: #ce262c;
+    color: #fff;
 }
 
 #add-button .material-symbols-outlined,
@@ -221,4 +220,39 @@ h2 {
     margin: 0;
     line-height: 1.2;
     text-align: center;
+}
+
+@media screen and (max-width: 360px) {
+    #text-back {
+        font-size: 16px;
+    }
+
+    #user-profile-picture {
+        width: 35px;
+        height: 35px;
+    }
+
+    .material-symbols-outlined {
+        font-size: 18px;
+    }
+
+    #chat-input-container {
+        padding: 6px 10px;
+    }
+
+    #add-button,
+    #send-button {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    #chat-messages {
+        padding-bottom: 120px;
+    }
+
+    #chat-input-container {
+        bottom: 35px;
+    }
 }

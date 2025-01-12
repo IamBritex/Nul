@@ -120,6 +120,7 @@ h2 {
 
 #chat-input-container {
     background-color: #15151f;
+    position: fixed;
     padding: 8px 12px;
     bottom: 40px; /* Espacio para el warning */
     left: 8px;

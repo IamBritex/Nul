@@ -2,28 +2,26 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Interface</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="chat.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Chat en tiempo real</title>
 </head>
 <body>
     <div id="chat-container">
         <div id="chat-header">
             <button id="back-button">
-                <span class="material-icons">arrow_back</span><p>Chats</p>
+                <span class="material-symbols-outlined">keyboard_backspace</span><p>Chats</p>
             </button>
             <div id="user-profile">
                 <img id="user-profile-picture" src="assets/default.jpeg" alt="Foto de perfil">
-                <h2><span id="friend-name">Britex</span></h2>
-            </div>
+                <h2><span id="friend-name">Usuario</span></h2>
+            </div>            
             <div id="more-options">
-                <span class="material-icons">more_vert</span>
+                <span class="material-symbols-outlined">more_vert</span>
             </div>
         </div>
-        <div id="chat-messages">
-            <!-- Aquí aparecerán los mensajes -->
-        </div>
+        <div id="chat-messages"></div>
         <div id="chat-input-container">
             <div id="input-wrapper">
                 <form id="message-form">
@@ -31,30 +29,26 @@
                 </form>
                 <div class="buttons-options">
                     <button id="add-button">
-                        <span class="material-icons">add</span>
-                    </button>
+                        <span class="material-symbols-outlined">add</span>
+                    </button>    
                     <button type="submit" id="send-button">
-                        <span class="material-icons">arrow_upward</span>
-                    </button>
+                        <span class="material-symbols-outlined">arrow_upward</span>
+                    </button>    
                 </div>
             </div>
-            <div id="chat-warning">
-                <span class="material-icons">info</span>
+            <div class="chat-warning">
+                <span class="material-symbols-outlined">info</span>
                 <p>Este chat no está cifrado. <br> ¡No compartas información personal o sensible!</p>
             </div>
         </div>
     </div>
-    <script>
-        const messageInput = document.getElementById('message-input');
-        const sendButton = document.getElementById('send-button');
+    </div>
 
-        messageInput.addEventListener('input', function() {
-            if (this.value.trim().length > 0) {
-                sendButton.classList.add('active');
-            } else {
-                sendButton.classList.remove('active');
-            }
-        });
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="chat.js"></script>
+    <script src="scriptStyle/buttonSend.js"></script>
 </body>
 </html>
+

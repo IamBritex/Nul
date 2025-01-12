@@ -14,7 +14,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'oxigen', sans-serif; /* sans-serif es un respaldo */
+    font-family: 'oxigen'; /* sans-serif es un respaldo */
 }
 
 body {
@@ -34,7 +34,7 @@ body {
 }
 
 #chat-header {
-    font-family: 'nothing', sans-serif; /* sans-serif es un respaldo */
+    font-family: 'nothing'; /* sans-serif es un respaldo */
     background-color: #07080a;
     padding: 8px 12px;
     display: flex;

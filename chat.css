@@ -140,7 +140,6 @@ h2 {
     border-radius: 20px;
     color: white;
     padding: 12px 16px;
-    font-size: 14px;
     outline: none;
     width: 100%;
 }
@@ -247,5 +246,9 @@ h2 {
 
     #chat-input-container {
         bottom: 35px;
+    }
+
+    .chat-warning {
+        margin-bottom: 30px;
     }
 }

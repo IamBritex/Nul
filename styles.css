@@ -1,4 +1,10 @@
+@font-face {
+    font-family: 'nothing';
+    src: url('/nothing-font-5x7.ttf') format('truetype');
+}
+
 body {
+    font-family: 'nothing';
     line-height: 1.6;
     margin: 0;
     padding: 0;

@@ -94,7 +94,7 @@ body {
 
 #friend-name {
     color: white;
-    font-size: clamp(14px, 3.5vw, 15px);
+    font-size: 17px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

@@ -10,14 +10,12 @@
     <div id="main-logo">Nul</div>
     <div id="login-container">
         <p id="welcome-text">Bienvenido a Nul, por favor,<br>inicia sesión</p>
-        
-        <input type="email" id="email-field" placeholder="Correo electrónico">
-        <input type="password" id="password-field" placeholder="Contraseña">
+
+        <input type="email" id="email-field" placeholder="Correo electrónico" autocomplete="off">
+        <input type="password" id="password-field" placeholder="Contraseña" autocomplete="off">
         
         <button id="continue-btn" class="btn btn-primary">CONTINUAR</button>
-        
         <div id="divider">- O BIEN -</div>
-        
         <button id="create-account-btn" class="btn">
             <a href="./register/register.html">CREAR UNA CUENTA</a>
         </button>
@@ -29,8 +27,9 @@
         </button>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>    
     <script src="login.js"></script>
 </body>
 </html>

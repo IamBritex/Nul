@@ -34,7 +34,7 @@ body {
 }
 
 #chat-header {
-    font-family: 'nothing', sans-serif; /* Respaldo añadido */
+    font-family: 'nothing'; /* Respaldo añadido */
     background-color: #07080a;
     padding: 8px 12px;
     display: flex;
@@ -132,14 +132,14 @@ body {
 .message.sent {
     color: white; /* Texto blanco */
     align-self: flex-start; /* Alineado a la derecha */
-    border-top-right-radius: 0;
+    margin: 5px 10px;
 }
 
 /* Mensajes recibidos */
 .message.received {
     color: white; /* Texto negro */
     align-self: flex-start; /* Alineado a la izquierda */
-    border-top-left-radius: 0;
+    margin: 5px 10px;
 }
 
 #chat-input-container {

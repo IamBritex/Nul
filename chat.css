@@ -249,7 +249,7 @@ h2 {
 
 @media screen and (max-height: 600px) {
     #chat-messages {
-        padding-bottom: 120px;
+        padding-bottom: -120px;
     }
 
     #chat-input-container {

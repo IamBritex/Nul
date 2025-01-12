@@ -16,7 +16,6 @@
 }
 
 body {
-    font-family: 'nothing';
     background-color: #07080a;
     height: 100vh;
     width: 100%;
@@ -33,7 +32,6 @@ body {
 }
 
 #chat-header {
-    font-family: 'nothing'; /* Respaldo añadido */
     background-color: #07080a;
     padding: 8px 12px;
     display: flex;
@@ -217,16 +215,24 @@ body {
     text-align: center;
 }
 
+body {
+    font-family: 'oxigen';
+}
+
+#chat-header {
+    font-family: 'nothing'; /* Respaldo añadido */
+}
+
 /* Ajustes para pantallas muy pequeñas */
 @media screen and (max-width: 320px) {
     #chat-input-container {
         padding: 6px 8px;
     }
-    
+
     #message-input {
         padding: 8px 12px;
     }
-    
+
     .buttons-options {
         padding: 0 4px;
     }
@@ -237,7 +243,7 @@ body {
     #chat-messages {
         padding-bottom: 100px;
     }
-    
+
     #chat-input-container {
         bottom: 30px;
     }

@@ -7,24 +7,30 @@
     <title>Login Interface</title>
 </head>
 <body>
-    <div class="main-logo">Nul</div>
-    <div class="login-container">
-        <p class="welcome-text">Bienvenido a Nul, por favor,<br>inicia sesión</p>
+    <div id="main-logo">Nul</div>
+    <div id="login-container">
+        <p id="welcome-text">Bienvenido a Nul, por favor,<br>inicia sesión</p>
         
-        <input type="email" class="input-field" placeholder="Correo electrónico">
-        <input type="password" class="input-field" placeholder="Contraseña">
+        <input type="email" id="email-field" placeholder="Correo electrónico">
+        <input type="password" id="password-field" placeholder="Contraseña">
         
-        <button class="btn btn-primary">CONTINUAR</button>
+        <button id="continue-btn" class="btn btn-primary">CONTINUAR</button>
         
-        <div class="divider">- O BIEN -</div>
+        <div id="divider">- O BIEN -</div>
         
-        <button class="btn"><a href="./register/register.html">CREAR UNA CUENTA</a></button>
+        <button id="create-account-btn" class="btn">
+            <a href="./register/register.html">CREAR UNA CUENTA</a>
+        </button>
         
-        <button class="btn btn-google">
+        <button id="google-btn" class="btn btn-google">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxOCIgdmlld0JveD0iMCAwIDQ4IDQ4Ij48cGF0aCBmaWxsPSIjRkZGIiBkPSJNNDMuNjExLDIwLjA4M0g0MlYyMEgyNHY4aDExLjMwM2MtMS42NDksNC42NTctNi4wOCw4LTExLjMwMyw4Yy02LjYyNywwLTEyLTUuMzczLTEyLTEyYzAtNi42MjcsNS4zNzMtMTIsMTItMTJjMy4wNTksMCw1Ljg0MiwxLjE1NCw3Ljk2MSwzLjAzOWw1LjY1Ny01LjY1N0MzNC4wNDYsNi4wNTMsMjkuMjY4LDQsMjQsNEMxMi45NTUsNCw0LDEyLjk1NSw0LDI0YzAsMTEuMDQ1LDguOTU1LDIwLDIwLDIwYzExLjA0NSwwLDIwLTguOTU1LDIwLTIwQzQ0LDIyLjY1OSw0My44NjIsMjEuMzUsNDMuNjExLDIwLjA4M3oiPjwvcGF0aD48L3N2Zz4=" 
                  alt="Google icon" class="google-icon">
             CONTINUAR CON GOOGLE
         </button>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="login.js"></script>
 </body>
 </html>

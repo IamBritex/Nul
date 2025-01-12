@@ -104,7 +104,7 @@ function searchFriends() {
 function startChat(friendId, friendUsername) {
     console.log('Iniciando chat con:', friendId, friendUsername);
     localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, username: friendUsername }));
-    window.location.href = 'chat.html';
+    window.location.href = './chat/chat.html';
 }
   
 // Función para mostrar el input de cambio de nombre de usuario
@@ -248,7 +248,7 @@ uploadFileBtn.addEventListener('click', async () => {
         });
         const data = await response.json();
 
-        // Actualizar la foto de perfil en la página
+        // Actualizar la foto de perfil en la páginachat/chat.html
         profilePicture.src = data.secure_url;
 
         // Guardar la nueva URL en Firestore

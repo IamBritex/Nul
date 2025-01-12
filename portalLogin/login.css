@@ -30,7 +30,7 @@ body {
     padding: 20px;
 }
 
-.main-logo {
+#main-logo {
     font-family: 'nothing';
     font-size: 55px;
     color: white;
@@ -38,7 +38,7 @@ body {
     letter-spacing: 4px;
 }
 
-.login-container {
+#login-container {
     width: 100%;
     max-width: 400px;
     padding: 2rem;
@@ -47,14 +47,14 @@ body {
     box-shadow: 0 0 20px rgb(21, 21, 31);
 }
 
-.welcome-text {
+#welcome-text {
     text-align: center;
     color: white;
     margin-bottom: 2rem;
     font-size: 17px;
 }
 
-.input-field {
+#email-field, #password-field {
     width: 100%;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -65,11 +65,11 @@ body {
     font-size: 1rem;
 }
 
-.input-field::placeholder {
+#email-field::placeholder, #password-field::placeholder {
     color: #666;
 }
 
-.input-field:focus {
+#email-field:focus, #password-field:focus {
     outline: none;
     border-bottom-color: #666;
 }
@@ -99,13 +99,13 @@ body {
     background-color: #333;
 }
 
-.divider {
+#divider {
     text-align: center;
     color: white;
     margin: 1rem 0;
 }
 
-.btn-google {
+#google-btn {
     background-color: #1C2022;
     color: white;
     display: flex;
@@ -114,7 +114,7 @@ body {
     gap: 0.5rem;
 }
 
-.btn-google:hover {
+#google-btn:hover {
     background-color: #333;
 }
 

@@ -34,7 +34,7 @@ let currentChat = null;
 // Event listeners
 messageForm.addEventListener('submit', sendMessage);
 sendButton.addEventListener('click', sendMessage);
-backButton.addEventListener('click', () => window.location.href = 'index.html');
+backButton.addEventListener('click', () => window.location.href = '../index.html');
 messageInput.addEventListener('input', toggleSendButtonColor);
 
 // Función para cambiar el color del botón de enviar
@@ -209,11 +209,11 @@ auth.onAuthStateChanged((user) => {
             loadMessages();
         } else {
             console.error('No hay información del amigo en el almacenamiento local');
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         }
     } else {
         console.log('No hay usuario autenticado');
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
     }
 });
 

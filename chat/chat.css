@@ -1,18 +1,17 @@
 @font-face {
     font-family: 'nothing';
-    src: url('fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+    src: url('../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'oxigen';
-    src: url('fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+    src: url('../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'oxigen'; /* Respaldo añadido */
 }
 
 body {
@@ -49,6 +48,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-family: 'oxigen'; /* Respaldo añadido */
 }
 
 .logo-back, .text-back {
@@ -116,6 +116,7 @@ body {
     padding-bottom: max(140px, 30vh);
     color: #fff;
     -webkit-overflow-scrolling: touch;
+    font-family: 'oxigen'; /* Respaldo añadido */
 }
 
 /* Nombre del remitente */
@@ -219,7 +220,7 @@ body {
     font-family: 'oxigen';
 }
 
-#chat-header {
+#friend-name {
     font-family: 'nothing'; /* Respaldo añadido */
 }
 

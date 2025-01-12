@@ -7,7 +7,7 @@ const firebaseConfig = {
     messagingSenderId: "991015329906",
     appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
     measurementId: "G-3X6LV0DT7P"
-  };
+};
 
 // Elementos relacionados con la foto de perfil
 const profilePicture = document.getElementById('profile-picture');
@@ -22,51 +22,51 @@ const modalBackdrop = document.getElementById('modal-backdrop');
 const cloudName = "dbdrdkngr"; 
 const uploadPreset = "ml_default";
   
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
+// Inicializar Firebase
+firebase.initializeApp(firebaseConfig);
   
-  // Obtener referencias a los servicios de Firebase
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+// Obtener referencias a los servicios de Firebase
+const auth = firebase.auth();
+const db = firebase.firestore();
   
-  // Elementos del DOM
-  const loginButton = document.getElementById('login-button');
-  const logoutButton = document.getElementById('logout-button');
-  const userSection = document.getElementById('user-section');
-  const userNameSpan = document.getElementById('user-name');
-  const newUsernameInput = document.getElementById('new-username');
-  const saveUsernameButton = document.getElementById('save-username');
-  const friendSearch = document.getElementById('friend-search');
-  const friendList = document.getElementById('friend-list');
+// Elementos del DOM
+const loginButton = document.getElementById('login-button');
+const logoutButton = document.getElementById('logout-button');
+const userSection = document.getElementById('user-section');
+const userNameSpan = document.getElementById('user-name');
+const newUsernameInput = document.getElementById('new-username');
+const saveUsernameButton = document.getElementById('save-username');
+const friendSearch = document.getElementById('friend-search');
+const friendList = document.getElementById('friend-list');
   
-  // Variables globales
-  let currentUser = null;
+// Variables globales
+let currentUser = null;
   
-  // Event listeners
-  loginButton.addEventListener('click', signInWithGoogle);
-  logoutButton.addEventListener('click', signOut);
-  friendSearch.addEventListener('input', debounce(searchFriends, 300));
-  userNameSpan.addEventListener('click', showUsernameInput);
-  saveUsernameButton.addEventListener('click', changeUsername);
+// Event listeners
+loginButton.addEventListener('click', signInWithGoogle);
+logoutButton.addEventListener('click', signOut);
+friendSearch.addEventListener('input', debounce(searchFriends, 300));
+userNameSpan.addEventListener('click', showUsernameInput);
+saveUsernameButton.addEventListener('click', changeUsername);
   
-  // Función para iniciar sesión con Google
-  function signInWithGoogle() {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider).catch(error => {
-          console.error("Error al iniciar sesión:", error);
-      });
-  }
+// Función para iniciar sesión con Google
+function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).catch(error => {
+        console.error("Error al iniciar sesión:", error);
+    });
+}
   
-  // Función para cerrar sesión
-  function signOut() {
-      auth.signOut().catch(error => {
-          console.error("Error al cerrar sesión:", error);
-      });
-  }
+// Función para cerrar sesión
+function signOut() {
+    auth.signOut().catch(error => {
+        console.error("Error al cerrar sesión:", error);
+    });
+}
   
-  // Función para buscar amigos
+// Función para buscar amigos
 function searchFriends() {
-    const searchTerm = friendSearch.value.trim().toLowerCase();  // Convertir a minúsculas
+    const searchTerm = friendSearch.value.trim().toLowerCase();
     friendList.innerHTML = '';
   
     if (searchTerm.length === 0) {
@@ -100,25 +100,25 @@ function searchFriends() {
         });
 }
   
-  // Función para iniciar chat
-  function startChat(friendId, friendUsername) {
-      console.log('Iniciando chat con:', friendId, friendUsername);
-      localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, username: friendUsername }));
-      window.location.href = 'chat.html';
-  }
+// Función para iniciar chat
+function startChat(friendId, friendUsername) {
+    console.log('Iniciando chat con:', friendId, friendUsername);
+    localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, username: friendUsername }));
+    window.location.href = 'chat.html';
+}
   
-  // Función para mostrar el input de cambio de nombre de usuario
-  function showUsernameInput() {
-      userNameSpan.style.display = 'none';
-      newUsernameInput.style.display = 'inline-block';
-      saveUsernameButton.style.display = 'inline-block';
-      newUsernameInput.value = userNameSpan.textContent.slice(1); // Eliminar el @
-      newUsernameInput.focus();
-  }
+// Función para mostrar el input de cambio de nombre de usuario
+function showUsernameInput() {
+    userNameSpan.style.display = 'none';
+    newUsernameInput.style.display = 'inline-block';
+    saveUsernameButton.style.display = 'inline-block';
+    newUsernameInput.value = userNameSpan.textContent.slice(1); // Eliminar el @
+    newUsernameInput.focus();
+}
   
-  // Función para cambiar el nombre de usuario
+// Función para cambiar el nombre de usuario
 function changeUsername() {
-    let newUsername = newUsernameInput.value.trim().toLowerCase();  // Convertir a minúsculas
+    let newUsername = newUsernameInput.value.trim().toLowerCase();
     if (newUsername && newUsername !== currentUser.username) {
         db.collection('users').where('username', '==', newUsername).get()
             .then((snapshot) => {
@@ -143,14 +143,14 @@ function changeUsername() {
     }
 }
   
-  // Función debounce para evitar múltiples llamadas a la base de datos
-  function debounce(func, delay) {
-      let timeoutId;
-      return function (...args) {
-          clearTimeout(timeoutId);
-          timeoutId = setTimeout(() => func.apply(this, args), delay);
-      };
-  }
+// Función debounce para evitar múltiples llamadas a la base de datos
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+}
   
 // Listener para cambios en el estado de autenticación
 auth.onAuthStateChanged((user) => {
@@ -167,10 +167,10 @@ auth.onAuthStateChanged((user) => {
                 currentUser.username = doc.data().username;
                 userNameSpan.textContent = `@${currentUser.username}`;
                 console.log('Nombre de usuario existente:', currentUser.username);
-                document.title = `${currentUser.username} Nul`; // Aquí se cambia el título
+                document.title = `${currentUser.username} Nul`;
             } else {
                 // Si no tiene un nombre de usuario, crear uno basado en su displayName
-                const username = user.displayName.toLowerCase().replace(/\s+/g, '_');  // Convertir a minúsculas
+                const username = user.displayName.toLowerCase().replace(/\s+/g, '_');
                 db.collection('users').doc(user.uid).set({
                     username: username,
                     email: user.email
@@ -178,7 +178,7 @@ auth.onAuthStateChanged((user) => {
                     console.log('Nuevo nombre de usuario creado:', username);
                     currentUser.username = username;
                     userNameSpan.textContent = `@${username}`;
-                    document.title = `${username} Nul`; // Aquí también se cambia el título
+                    document.title = `${username} Nul`;
                 }).catch((error) => {
                     console.error('Error al crear el nombre de usuario:', error);
                 });
@@ -193,10 +193,11 @@ auth.onAuthStateChanged((user) => {
         logoutButton.style.display = 'none';
         userSection.style.display = 'none';
         friendList.innerHTML = '';
+        
+        // Redirigir al usuario al portalLogin
+        window.location.href = 'portalLogin/login.html';
     }
 });
-
-
 
 // Mostrar foto de perfil del usuario autenticado
 auth.onAuthStateChanged((user) => {
@@ -267,3 +268,4 @@ uploadFileBtn.addEventListener('click', async () => {
         alert('Error al subir la imagen. Inténtalo nuevamente.');
     }
 });
+

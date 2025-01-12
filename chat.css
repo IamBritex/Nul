@@ -247,9 +247,3 @@ h2 {
         height: 28px;
     }
 }
-
-@media screen and (max-height: 600px) {
-    #chat-messages {
-        padding-bottom: 120px;
-    }
-}

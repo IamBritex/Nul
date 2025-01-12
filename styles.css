@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'nothing';
-    src: url('./fonts/mojang/Mojang-Regular.ttf') format('truetype');
+    src: url('data:font/truetype;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg...') format('truetype');
+    font-weight: normal;
 }
 
 body {

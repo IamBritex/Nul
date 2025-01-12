@@ -222,28 +222,3 @@ h2 {
     line-height: 1.2;
     text-align: center;
 }
-
-@media screen and (max-width: 360px) {
-    #text-back {
-        font-size: 16px;
-    }
-
-    #user-profile-picture {
-        width: 35px;
-        height: 35px;
-    }
-
-    .material-symbols-outlined {
-        font-size: 18px;
-    }
-
-    #chat-input-container {
-        padding: 6px 10px;
-    }
-
-    #add-button,
-    #send-button {
-        width: 28px;
-        height: 28px;
-    }
-}

@@ -118,8 +118,23 @@ function sendMessage(e) {
     }
 }
 
+let lastSender = null; // Variable para rastrear el último remitente
+
 function displayMessage(message) {
     console.log('Mostrando mensaje:', message);
+
+    // Verifica si el remitente ha cambiado
+    if (message.sender !== lastSender) {
+        lastSender = message.sender;
+
+        // Agrega un contenedor para el nombre del remitente
+        const senderNameElement = document.createElement('div');
+        senderNameElement.classList.add('sender-name');
+        senderNameElement.textContent = message.sender === currentUser.uid ? 'Tú' : currentChat.username;
+        chatMessages.appendChild(senderNameElement);
+    }
+
+    // Crea el mensaje
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
     messageElement.classList.add(message.sender === currentUser.uid ? 'sent' : 'received');
@@ -127,25 +142,22 @@ function displayMessage(message) {
     // Verifica si el texto es un enlace válido
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     if (urlRegex.test(message.text)) {
-        // Si es un enlace, crea un elemento <a>
         const linkElement = document.createElement('a');
-        linkElement.href = message.text.match(urlRegex)[0]; // Toma el primer enlace encontrado
-        linkElement.target = '_blank'; // Abre en una nueva pestaña
-        linkElement.rel = 'noopener noreferrer'; // Buenas prácticas de seguridad
+        linkElement.href = message.text.match(urlRegex)[0];
+        linkElement.target = '_blank';
+        linkElement.rel = 'noopener noreferrer';
         linkElement.textContent = message.text;
-        linkElement.style.color = '#CE262C'; // Color rojo para distinguir el enlace
-        linkElement.style.textDecoration = 'underline'; // Subrayar para enfatizar
+        linkElement.style.color = '#CE262C';
+        linkElement.style.textDecoration = 'underline';
 
         messageElement.appendChild(linkElement);
     } else {
-        // Si no es un enlace, muestra el texto normal
         messageElement.textContent = message.text;
     }
 
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight; // Desplaza al final del chat
 }
-
 
 // Función para cargar mensajes
 function loadMessages() {

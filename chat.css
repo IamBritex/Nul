@@ -1,8 +1,20 @@
+@font-face {
+    font-family: 'nothing';
+    src: url('/fonts/nothing/nothing-font-5x7.ttf') format('ttf');
+    font-style: normal; /* normal o italic */
+}
+
+@font-face {
+    font-family: 'oxigen';
+    src: url('/fonts/oxigen/OxygenMono-Regular.ttf') format('ttf');
+    font-style: normal; /* normal o italic */
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-family: 'oxigen', sans-serif; /* sans-serif es un respaldo */
 }
 
 body {
@@ -22,6 +34,7 @@ body {
 }
 
 #chat-header {
+    font-family: 'nothing', sans-serif; /* sans-serif es un respaldo */
     background-color: #07080a;
     padding: 8px 12px;
     display: flex;
@@ -107,6 +120,30 @@ body {
     color: #fff;
     -webkit-overflow-scrolling: touch;
 }
+
+/* Nombre del remitente */
+.sender-name {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 5px 10px;
+}
+
+/* Mensajes enviados */
+.message.sent {
+    background-color: #007bff; /* Azul */
+    color: white; /* Texto blanco */
+    align-self: flex-start; /* Alineado a la derecha */
+    border-top-right-radius: 0;
+}
+
+/* Mensajes recibidos */
+.message.received {
+    background-color: #f1f1f1; /* Gris claro */
+    color: black; /* Texto negro */
+    align-self: flex-start; /* Alineado a la izquierda */
+    border-top-left-radius: 0;
+}
+
 
 #chat-input-container {
     background-color: #15151f;

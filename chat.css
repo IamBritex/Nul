@@ -1,13 +1,11 @@
 @font-face {
     font-family: 'nothing';
-    src: url('/nothing-font-5x7.ttf') format('truetype');
+    src: url('fonts/nothing/nothing-font-5x7.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'oxigen';
     src: url('./fonts/nothing/OxygenMono-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-display: swap;
 }
 
 * {

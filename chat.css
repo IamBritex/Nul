@@ -115,6 +115,7 @@ h2 {
     overflow-y: auto;
     width: 100%;
     padding-bottom: 140px; /* Espacio para el input y warning */
+    color: #fff;
 }
 
 #chat-input-container {
@@ -207,7 +208,6 @@ h2 {
     width: 100%;
     text-align: center;
     padding: 4px 0;
-    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;

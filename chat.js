@@ -118,16 +118,34 @@ function sendMessage(e) {
     }
 }
 
-// Función para mostrar mensajes
 function displayMessage(message) {
     console.log('Mostrando mensaje:', message);
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
     messageElement.classList.add(message.sender === currentUser.uid ? 'sent' : 'received');
-    messageElement.textContent = message.text;
+
+    // Verifica si el texto es un enlace válido
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    if (urlRegex.test(message.text)) {
+        // Si es un enlace, crea un elemento <a>
+        const linkElement = document.createElement('a');
+        linkElement.href = message.text.match(urlRegex)[0]; // Toma el primer enlace encontrado
+        linkElement.target = '_blank'; // Abre en una nueva pestaña
+        linkElement.rel = 'noopener noreferrer'; // Buenas prácticas de seguridad
+        linkElement.textContent = message.text;
+        linkElement.style.color = '#CE262C'; // Color rojo para distinguir el enlace
+        linkElement.style.textDecoration = 'underline'; // Subrayar para enfatizar
+
+        messageElement.appendChild(linkElement);
+    } else {
+        // Si no es un enlace, muestra el texto normal
+        messageElement.textContent = message.text;
+    }
+
     chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
+    chatMessages.scrollTop = chatMessages.scrollHeight; // Desplaza al final del chat
 }
+
 
 // Función para cargar mensajes
 function loadMessages() {

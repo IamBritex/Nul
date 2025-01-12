@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nul</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1>Nul</h1>
+        </header>
+        <main>
+            <div id="auth-section">
+                <button id="login-button">Iniciar sesión con Google</button>
+                <button id="logout-button" style="display: none;">Cerrar sesión</button>
+            </div>
+            <div id="user-section" style="display: none;">
+                <div id="pfp-user" style="cursor: pointer;">
+                    <img id="profile-picture" src="" alt="Foto de perfil" />
+                </div>
+                <p>Bienvenido, <span id="user-name" class="editable"></span></p>
+                <input type="text" id="new-username" placeholder="Nuevo nombre de usuario" style="display: none;">
+                <button id="save-username" style="display: none;">Guardar</button>
+                <input type="text" id="friend-search" placeholder="Buscar amigos por @nombre">
+                <ul id="friend-list"></ul>
+            </div>
+            <!-- Modal para subir nueva foto -->
+            <div id="upload-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border-radius: 10px; z-index: 1000;">
+                <p>Sube una nueva foto de perfil:</p>
+                <input type="file" id="file-input" accept="image/*" />
+                <button id="upload-file-btn">Subir Imagen</button>
+                <button id="close-modal">Cancelar</button>
+            </div>
+            <div id="modal-backdrop" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+        </main>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

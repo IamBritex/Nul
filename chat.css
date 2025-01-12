@@ -1,27 +1,15 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-
 body {
-    background-color: #07080a;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #07090B;
+    color: #fff;
 }
 
 #chat-container {
-    flex-grow: 1;
-    background-color: #07080a;
-    overflow-y: auto;
-    width: 100%;
-    padding-bottom: 140px; /* Espacio para el input y warning */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #07090B;
 }
 
 #chat-header {

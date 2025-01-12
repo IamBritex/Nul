@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'nothing';
-    src: url('/fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+    src: url('fonts/nothing/nothing-font-5x7.ttf') format('truetype');
     font-style: normal; /* normal o italic */
 }
 
 @font-face {
     font-family: 'oxigen';
-    src: url('/fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+    src: url('fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
     font-style: normal; /* normal o italic */
 }
 

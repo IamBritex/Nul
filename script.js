@@ -63,7 +63,7 @@ function searchFriends() {
     }
   
     db.collection('users')
-        .orderBy('username')
+        .orderBy('name')
         .startAt(searchTerm)
         .endAt(searchTerm + '\uf8ff')
         .limit(10)
@@ -73,8 +73,8 @@ function searchFriends() {
                 const userData = doc.data();
                 if (doc.id !== currentUser.uid) {
                     const li = document.createElement('li');
-                    li.textContent = `@${userData.username}`;
-                    li.addEventListener('click', () => startChat(doc.id, userData.username));
+                    li.textContent = `@${userData.name}`;
+                    li.addEventListener('click', () => startChat(doc.id, userData.name));
                     friendList.appendChild(li);
                 }
             });
@@ -183,8 +183,6 @@ auth.onAuthStateChanged((user) => {
 
 auth.onAuthStateChanged((user) => {
     if (user) {
-        profilePicture.src = user.photoURL || './assets/default.png'; // Imagen predeterminada si no hay foto
-
         db.collection('users').doc(user.uid).get().then((doc) => {
             if (doc.exists && doc.data().profilePicture) {
                 profilePicture.src = doc.data().profilePicture;

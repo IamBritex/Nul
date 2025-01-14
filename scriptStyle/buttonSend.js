@@ -11,11 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Manejar el envío del formulario
     messageForm.addEventListener('submit', function(e) {
         e.preventDefault();
         if (messageInput.value.trim() !== '') {
-            // Aquí iría la lógica para enviar el mensaje
             messageInput.value = '';
             sendButton.classList.remove('has-text');
         }

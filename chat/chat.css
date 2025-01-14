@@ -116,7 +116,7 @@ body {
     padding-bottom: max(140px, 30vh);
     color: #fff;
     -webkit-overflow-scrolling: touch;
-    font-family: 'oxigen'; /* Respaldo añadido */
+    font-family: 'oxigen';
 }
 
 /* Nombre del remitente */
@@ -126,17 +126,15 @@ body {
     margin: 5px 10px;
 }
 
-/* Mensajes enviados */
 .message.sent {
-    color: white; /* Texto blanco */
-    align-self: flex-start; /* Alineado a la derecha */
+    color: white; 
+    align-self: flex-start; 
     margin: 5px 10px;
 }
 
-/* Mensajes recibidos */
 .message.received {
-    color: white; /* Texto negro */
-    align-self: flex-start; /* Alineado a la izquierda */
+    color: white;
+    align-self: flex-start; 
     margin: 5px 10px;
 }
 
@@ -224,7 +222,6 @@ body {
     font-family: 'nothing'; /* Respaldo añadido */
 }
 
-/* Ajustes para pantallas muy pequeñas */
 @media screen and (max-width: 320px) {
     #chat-input-container {
         padding: 6px 8px;
@@ -239,7 +236,6 @@ body {
     }
 }
 
-/* Ajustes para pantallas con poca altura */
 @media screen and (max-height: 500px) {
     #chat-messages {
         padding-bottom: 100px;
@@ -250,7 +246,6 @@ body {
     }
 }
 
-/* Prevenir zoom en iOS al hacer focus en inputs */
 @media screen and (max-width: 768px) {
     #message-input {
         font-size: 16px;

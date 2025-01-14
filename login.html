@@ -34,28 +34,23 @@ const firebaseConfig = {
 };
 
 
-        // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Referencias al DOM
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
         const errorMessage = document.getElementById('error-message');
 
-        // Manejo de inicio de sesión
         loginBtn.addEventListener('click', async () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
             errorMessage.textContent = '';
 
             try {
-                // Intentar iniciar sesión
                 await auth.signInWithEmailAndPassword(email, password);
                 alert("Inicio de sesión exitoso.");
             } catch (error) {
-                // Manejo de errores
                 console.error("Error de inicio de sesión:", error);
 
                 if (error.code === "auth/user-not-found" || error.code === "auth/invalid-login-credentials") {

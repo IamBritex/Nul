@@ -1,7 +1,6 @@
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
-// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
     authDomain: "chat-app-ccc84.firebaseapp.com",

@@ -1,4 +1,3 @@
-// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
     authDomain: "chat-app-ccc84.firebaseapp.com",
@@ -11,22 +10,18 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// Inicialización de Firestore y Firebase Auth
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// Referencias a elementos del DOM
 const emailField = document.getElementById('email-field');
 const passwordField = document.getElementById('password-field');
 const continueBtn = document.getElementById('continue-btn');
 const googleBtn = document.getElementById('google-btn');
 const messageContainer = document.getElementById('message-container');
 
-// Función para mostrar mensajes debajo del campo de contraseña
 function showMessage(message, action = null) {
     messageContainer.innerHTML = message;
 
-    // Si hay un enlace de acción, agregarlo
     if (action) {
         const actionLink = document.createElement('a');
         actionLink.href = action.href;
@@ -36,14 +31,12 @@ function showMessage(message, action = null) {
         actionLink.style.cursor = 'pointer';
         messageContainer.appendChild(actionLink);
 
-        // Vincular acción si es un evento click
         if (action.onClick) {
             actionLink.addEventListener('click', action.onClick);
         }
     }
 }
 
-// Función para mostrar mensajes debajo del campo de contraseña
 function showMessageSucefully(message, action = null) {
     messageContainer.innerHTML = message;
     messageContainer.className = 'message-success';
@@ -61,12 +54,10 @@ function showMessageSucefully(message, action = null) {
     }
 }
 
-// Función para limpiar mensajes
 function clearMessage() {
     messageContainer.innerHTML = '';
 }
 
-// Función para inicio de sesión con correo y contraseña
 continueBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     const email = emailField.value.trim();
@@ -110,7 +101,6 @@ googleBtn.addEventListener('click', async () => {
         const userSnapshot = await db.collection('users').where('email', '==', user.email).get();
 
         if (userSnapshot.empty) {
-            // El usuario no existe en Firestore, redirigir al registro
             showMessage("¡Bienvenido! Primero crea una cuenta", {
                 text: "Crea tu cuenta",
                 href: "./register/register.html",

@@ -23,28 +23,25 @@
         <button id="register-btn">Registrarse</button>
     </div>
     <script>
-const firebaseConfig = {
-    apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
-    authDomain: "chat-app-ccc84.firebaseapp.com",
-    projectId: "chat-app-ccc84",
-    storageBucket: "chat-app-ccc84.firebasestorage.app",
-    messagingSenderId: "991015329906",
-    appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
-    measurementId: "G-3X6LV0DT7P"
-};
+        const firebaseConfig = {
+            apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
+            authDomain: "chat-app-ccc84.firebaseapp.com",
+            projectId: "chat-app-ccc84",
+            storageBucket: "chat-app-ccc84.firebasestorage.app",
+            messagingSenderId: "991015329906",
+            appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
+            measurementId: "G-3X6LV0DT7P"
+        };
 
 
-        // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Referencias al DOM
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const registerBtn = document.getElementById('register-btn');
         const errorMessage = document.getElementById('error-message');
 
-        // Manejo de registro de usuario
         registerBtn.addEventListener('click', async () => {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();

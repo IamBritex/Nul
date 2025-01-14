@@ -1,4 +1,3 @@
-// Configurations
 const CONFIG = {
     firebase: {
         apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
@@ -16,7 +15,6 @@ const CONFIG = {
     maxFileSize: 5 * 1024 * 1024 // 5MB
 };
 
-// Firebase initialization
 if (!firebase.apps.length) {
     firebase.initializeApp(CONFIG.firebase);
 }
@@ -153,7 +151,7 @@ class ProfileManager {
     
             const data = await response.json();
             if (data.secure_url) {
-                this.updateUserProfile(data.secure_url); // Actualiza la foto de perfil con la URL del GIF
+                this.updateUserProfile(data.secure_url);
             }
         } catch (error) {
             console.error("Error al subir el GIF:", error);

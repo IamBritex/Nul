@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.2/firebase-auth-compat.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
+        .container { width: 300px; margin: auto; }
+        input { display: block; margin: 10px auto; padding: 10px; width: 90%; }
+        button { padding: 10px; width: 100%; background: #28a745; color: white; border: none; cursor: pointer; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Registrar Usuario</h1>
+        <div id="error-message" class="error"></div>
+        <input type="email" id="email" placeholder="Correo electrónico" />
+        <input type="password" id="password" placeholder="Contraseña" />
+        <button id="register-btn">Registrarse</button>
+    </div>
+    <script>
+const firebaseConfig = {
+    apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
+    authDomain: "chat-app-ccc84.firebaseapp.com",
+    projectId: "chat-app-ccc84",
+    storageBucket: "chat-app-ccc84.firebasestorage.app",
+    messagingSenderId: "991015329906",
+    appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
+    measurementId: "G-3X6LV0DT7P"
+};
+
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Referencias al DOM
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const registerBtn = document.getElementById('register-btn');
+        const errorMessage = document.getElementById('error-message');
+
+        // Manejo de registro de usuario
+        registerBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            errorMessage.textContent = '';
+
+            try {
+                await auth.createUserWithEmailAndPassword(email, password);
+                alert("Registro exitoso. Redirigiendo al inicio de sesión...");
+                window.location.href = "login.html";
+            } catch (error) {
+                errorMessage.textContent = error.message;
+            }
+        });
+    </script>
+</body>
+</html>

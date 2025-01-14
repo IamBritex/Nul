@@ -8,6 +8,11 @@
     src: url('../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
 }
 
+:root {
+    --background-general: #07080a;
+    --borders: #15151f;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -20,11 +25,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #000;
+    background-color: var(--background-general);
     padding: 20px;
 }
 
-.main-logo {
+#main-logo {
     font-family: 'nothing';
     font-size: 2.5rem;
     color: white;
@@ -32,31 +37,30 @@ body {
     letter-spacing: 4px;
 }
 
-.signup-container {
+#signup-container {
     font-family: 'oxigen';
     width: 100%;
     max-width: 400px;
     padding: 2rem;
-    background-color: rgb(21, 21, 31);
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    border: 3px var(--borders) solid;
 }
 
-.title {
+#title {
     color: white;
     font-size: 1.2rem;
     margin-bottom: 2rem;
     font-weight: normal;
 }
 
-.helper-text {
+#helper-text {
     color: white;
     font-size: 0.8rem;
     margin: 0.5rem 0 2rem 0;
     line-height: 1.4;
 }
 
-.input-field {
+#email-field {
     width: 100%;
     padding: 1rem;
     margin-bottom: 0.5rem;
@@ -67,16 +71,16 @@ body {
     font-size: 1rem;
 }
 
-.input-field::placeholder {
+#email-field::placeholder {
     color: #666;
 }
 
-.input-field:focus {
+#email-field:focus {
     outline: none;
     border-bottom-color: #666;
 }
 
-.btn {
+#next-btn {
     width: 100%;
     padding: 1rem;
     margin-top: 1rem;
@@ -91,6 +95,57 @@ body {
     transition: background-color 0.3s;
 }
 
-.btn:hover {
+#next-btn:hover {
     background-color: #333;
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toast {
+    background-color: #323232;
+    color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards, fadeOut 0.5s 3s forwards;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.toast.success {
+    background-color: #4caf50;
+}
+
+.toast.error {
+    background-color: #f44336;
+}
+
+.toast.info {
+    background-color: #2196f3;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

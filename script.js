@@ -194,8 +194,8 @@ auth.onAuthStateChanged((user) => {
         userSection.style.display = 'none';
         friendList.innerHTML = '';
         
-        // Redirigir al usuario al portalLogin
         window.location.href = 'portalLogin/login.html';
+        //window.location.href = './login.html';
     }
 });
 

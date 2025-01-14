@@ -7,96 +7,129 @@ const firebaseConfig = {
     messagingSenderId: "991015329906",
     appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
     measurementId: "G-3X6LV0DT7P"
-  };
-  
-  firebase.initializeApp(firebaseConfig);
-  
-  // Inicialización de Firestore
-  const db = firebase.firestore();
-  
-  // Referencias a elementos del DOM
-  const emailField = document.getElementById('email-field');
-  const passwordField = document.getElementById('password-field');
-  const continueBtn = document.getElementById('continue-btn');
-  const createAccountBtn = document.getElementById('create-account-btn');
-  const googleBtn = document.getElementById('google-btn');
-  
-// Función para inicio de sesión con correo/usuario y contraseña
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Inicialización de Firestore y Firebase Auth
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+// Referencias a elementos del DOM
+const emailField = document.getElementById('email-field');
+const passwordField = document.getElementById('password-field');
+const continueBtn = document.getElementById('continue-btn');
+const googleBtn = document.getElementById('google-btn');
+const messageContainer = document.getElementById('message-container');
+
+// Función para mostrar mensajes debajo del campo de contraseña
+function showMessage(message, action = null) {
+    messageContainer.innerHTML = message;
+
+    // Si hay un enlace de acción, agregarlo
+    if (action) {
+        const actionLink = document.createElement('a');
+        actionLink.href = action.href;
+        actionLink.textContent = action.text;
+        actionLink.style.marginLeft = '5px';
+        actionLink.style.color = 'blue';
+        actionLink.style.cursor = 'pointer';
+        messageContainer.appendChild(actionLink);
+
+        // Vincular acción si es un evento click
+        if (action.onClick) {
+            actionLink.addEventListener('click', action.onClick);
+        }
+    }
+}
+
+// Función para mostrar mensajes debajo del campo de contraseña
+function showMessageSucefully(message, action = null) {
+    messageContainer.innerHTML = message;
+    messageContainer.className = 'message-success';
+
+    if (action) {
+        const actionLink = document.createElement('a');
+        actionLink.href = action.href;
+        actionLink.textContent = action.text;
+        actionLink.style.marginLeft = '5px';
+        messageContainer.appendChild(actionLink);
+
+        if (action.onClick) {
+            actionLink.addEventListener('click', action.onClick);
+        }
+    }
+}
+
+// Función para limpiar mensajes
+function clearMessage() {
+    messageContainer.innerHTML = '';
+}
+
+// Función para inicio de sesión con correo y contraseña
 continueBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    const email = emailField.value;
-    const password = passwordField.value;
-  
+    const email = emailField.value.trim();
+    const password = passwordField.value.trim();
+
     if (email && password) {
-      try {
-        // Intentamos iniciar sesión con el correo y la contraseña
-        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-  
-        // Si la autenticación es exitosa, verificamos si el correo/nombre de usuario existe en Firestore
-        const user = userCredential.user;
-        const usersRef = db.collection('users');
-  
-        // Buscar el usuario en Firestore por correo electrónico
-        let userSnapshot = await usersRef.where('email', '==', email).get();
-  
-        // Si no se encuentra por correo, buscar por nombre de usuario
-        if (userSnapshot.empty) {
-          userSnapshot = await usersRef.where('name', '==', email).get();
+        try {
+            await auth.signInWithEmailAndPassword(email, password);
+            clearMessage();
+            showMessageSucefully("Inicio de sesión exitoso. Redirigiendo...", null);
+            setTimeout(() => (window.location.href = '../index.html'), 1500);
+        } catch (error) {
+            console.error('Error en el inicio de sesión:', error);
+            if (error.code === 'auth/user-not-found') {
+                showMessage("No existe una cuenta con este correo. ", {
+                    text: "Regístrate",
+                    href: "./register/register.html",
+                });
+            } else if (error.code === 'auth/wrong-password') {
+                showMessage("Contraseña incorrecta. ", {
+                    text: "¿Olvidaste tu contraseña?",
+                    href: "./recover-password.html",
+                });
+            } else {
+                showMessage("Error en el inicio de sesión. Intenta más tarde.");
+            }
         }
-  
-        // Si no se encuentra el usuario ni por correo ni por nombre de usuario
-        if (userSnapshot.empty) {
-          // Redirige al registro sin mostrar mensaje de error
-          window.location.href = './register/register.html';
-          return;
-        }
-  
-        // Si todo es correcto, redirigir a la página principal
-        window.location.href = '../index.html';
-  
-      } catch (error) {
-        // Si el error es de credenciales inválidas, redirige al registro
-        if (error.code === 'auth/invalid-email' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-          window.location.href = './register/register.html';
-        } else {
-          console.log(`Error inesperado: ${error.message}`);
-        }
-      }
     } else {
-      alert('Por favor, completa todos los campos.');
+        showMessage("Por favor, completa ambos campos.");
     }
-  });  
-  
-  // Función para redirigir a la página de creación de cuenta
-  createAccountBtn.addEventListener('click', () => {
-    window.location.href = './register/register.html';
-  });
-  
-  // Función para inicio de sesión con Google
-  googleBtn.addEventListener('click', async () => {
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-  
+});
+
+// Función para inicio de sesión con Google
+googleBtn.addEventListener('click', async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
     try {
-      const result = await firebase.auth().signInWithPopup(googleProvider);
-      const user = result.user;
-  
-      if (user) {
-        // Guarda los datos básicos del usuario en Firestore si no existen
-        const userDoc = db.collection('users').doc(user.uid);
-        const docSnapshot = await userDoc.get();
-        if (!docSnapshot.exists) {
-          await userDoc.set({
-            email: user.email,
-            name: user.displayName,
-            photoURL: user.photoURL,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-          });
+        const result = await auth.signInWithPopup(provider);
+        const user = result.user;
+
+        const userSnapshot = await db.collection('users').where('email', '==', user.email).get();
+
+        if (userSnapshot.empty) {
+            // El usuario no existe en Firestore, redirigir al registro
+            showMessage("¡Bienvenido! Primero crea una cuenta", {
+                text: "Crea tu cuenta",
+                href: "./register/register.html",
+            });
+        } else {
+            clearMessage();
+            showMessageSucefully("Inicio de sesión exitoso. Redirigiendo...", null);
+            setTimeout(() => (window.location.href = '../index.html'), 1500);
         }
-  
-        window.location.href = '../index.html'; // Redirige a index.html si la autenticación es exitosa
-      }
     } catch (error) {
-      alert(`Error al iniciar sesión con Google: ${error.message}`);
+        console.error('Error en el inicio de sesión con Google:', error);
+        showMessage("Error en el inicio de sesión con Google. Intenta más tarde.");
     }
-  });
-  
+});
+
+// Autocompletar el campo de correo si está almacenado en localStorage
+document.addEventListener('DOMContentLoaded', () => {
+    const storedEmail = localStorage.getItem('userEmail');
+    if (storedEmail) {
+        emailField.value = storedEmail;
+    }
+});

@@ -1,4 +1,3 @@
-// Configuración de Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
     authDomain: "chat-app-ccc84.firebaseapp.com",
@@ -9,10 +8,8 @@ const firebaseConfig = {
     measurementId: "G-3X6LV0DT7P"
 };
 
-// Inicializar Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Obtener referencias a los servicios de Firebase
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -27,17 +24,14 @@ const userProfilePicture = document.getElementById('user-profile-picture');
 const cloudinaryBaseURL = "https://res.cloudinary.com/dbdrdkngr/image/upload/"; // Cambia "tu-cloud-name" por el nombre de tu cuenta en Cloudinary
 
 
-// Variables globales
 let currentUser = null;
 let currentChat = null;
 
-// Event listeners
 messageForm.addEventListener('submit', sendMessage);
 sendButton.addEventListener('click', sendMessage);
 backButton.addEventListener('click', () => window.location.href = '../index.html');
 messageInput.addEventListener('input', toggleSendButtonColor);
 
-// Función para cambiar el color del botón de enviar
 function toggleSendButtonColor() {
     if (messageInput.value.trim() !== '') {
         sendButton.classList.add('has-text');
@@ -51,12 +45,12 @@ function loadFriendProfile() {
         if (doc.exists) {
             const friendData = doc.data();
             if (friendData.cloudinaryPublicId) {
-                userProfilePicture.src = `${cloudinaryBaseURL}${friendData.cloudinaryPublicId}`; // Usar la imagen de Cloudinary
+                userProfilePicture.src = `${cloudinaryBaseURL}${friendData.cloudinaryPublicId}`; 
             } else {
-                userProfilePicture.src = friendData.photoURL || 'assets/default.jpeg'; // Alternativa de Firebase o imagen predeterminada
+                userProfilePicture.src = friendData.photoURL || 'assets/default.jpeg'; 
             }
 
-            friendName.textContent = `@${friendData.username}`; // Nombre del amigo
+            friendName.textContent = `@${friendData.username}`; 
         } else {
             console.error('No se encontró el perfil del amigo en Firestore');
         }
@@ -68,9 +62,9 @@ function loadFriendProfile() {
 function updateProfilePicture(file) {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "tu-upload-preset"); // Cambia por tu preset de Cloudinary
+    formData.append("upload_preset", "tu-upload-preset"); 
 
-    fetch("https://api.cloudinary.com/v1_1/dbdrdkngr/image/upload", { // Cambia "tu-cloud-name"
+    fetch("https://api.cloudinary.com/v1_1/dbdrdkngr/image/upload", { 
         method: "POST",
         body: formData
     })
@@ -78,8 +72,8 @@ function updateProfilePicture(file) {
     .then(data => {
         if (data.secure_url) {
             db.collection('users').doc(auth.currentUser.uid).update({
-                cloudinaryPublicId: data.public_id, // Guardar el ID de Cloudinary en Firestore
-                photoURL: data.secure_url // URL directa para Firebase
+                cloudinaryPublicId: data.public_id,
+                photoURL: data.secure_url 
             }).then(() => {
                 console.log("Foto de perfil actualizada en Firestore");
             }).catch(error => {
@@ -92,7 +86,6 @@ function updateProfilePicture(file) {
     });
 }
 
-// Función para enviar mensajes
 function sendMessage(e) {
     e.preventDefault();
     const messageText = messageInput.value.trim();
@@ -109,7 +102,7 @@ function sendMessage(e) {
         }).then(() => {
             console.log('Mensaje enviado con éxito');
             messageInput.value = '';
-            toggleSendButtonColor(); // Actualizar el color del botón después de enviar
+            toggleSendButtonColor();
         }).catch(error => {
             console.error("Error al enviar el mensaje:", error);
         });
@@ -118,28 +111,24 @@ function sendMessage(e) {
     }
 }
 
-let lastSender = null; // Variable para rastrear el último remitente
+let lastSender = null;
 
 function displayMessage(message) {
     console.log('Mostrando mensaje:', message);
 
-    // Verifica si el remitente ha cambiado
     if (message.sender !== lastSender) {
         lastSender = message.sender;
 
-        // Agrega un contenedor para el nombre del remitente
         const senderNameElement = document.createElement('div');
         senderNameElement.classList.add('sender-name');
         senderNameElement.textContent = message.sender === currentUser.uid ? 'Tú' : currentChat.username;
         chatMessages.appendChild(senderNameElement);
     }
 
-    // Crea el mensaje
     const messageElement = document.createElement('div');
     messageElement.classList.add('message');
     messageElement.classList.add(message.sender === currentUser.uid ? 'sent' : 'received');
 
-    // Verifica si el texto es un enlace válido
     const urlRegex = /(https?:\/\/[^\s]+)/g;
     if (urlRegex.test(message.text)) {
         const linkElement = document.createElement('a');
@@ -156,10 +145,9 @@ function displayMessage(message) {
     }
 
     chatMessages.appendChild(messageElement);
-    chatMessages.scrollTop = chatMessages.scrollHeight; // Desplaza al final del chat
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Función para cargar mensajes
 function loadMessages() {
     if (currentUser && currentChat) {
         console.log('Cargando mensajes para:', currentUser.uid, currentChat.id);
@@ -183,12 +171,10 @@ function loadMessages() {
     }
 }
 
-
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log('Usuario autenticado:', user.uid);
         currentUser = user;
-            // Mostrar la foto de perfil del usuario desde Cloudinary
             db.collection('users').doc(currentUser.uid).get().then(doc => {
                 if (doc.exists) {
                     const userData = doc.data();
@@ -199,12 +185,11 @@ auth.onAuthStateChanged((user) => {
                     }
                 }
             });
-        // Obtener información del amigo del almacenamiento local
         const storedFriend = JSON.parse(localStorage.getItem('currentChatFriend'));
         if (storedFriend) {
             console.log('Amigo del chat:', storedFriend);
             currentChat = storedFriend;
-            loadFriendProfile(); // Cargar la foto y datos del amigo
+            loadFriendProfile();
             friendName.textContent = `@${currentChat.username}`;
             loadMessages();
         } else {
@@ -217,8 +202,6 @@ auth.onAuthStateChanged((user) => {
     }
 });
 
-
-// Verificar el estado de autenticación al cargar la página
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log('Usuario autenticado al cargar la página:', user.uid);

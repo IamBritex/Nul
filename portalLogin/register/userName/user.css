@@ -33,15 +33,16 @@ body {
 #logo {
     text-align: center;
     margin-bottom: 30px;
-    font-size: 55px;
+    font-size: 2.5rem;
     color: white;
     font-family: 'nothing';
     letter-spacing: 2px;
 }
 
 #form-card {
-    border: var(--borders) 3px solid;
+    background-color: var(--background-general);
     border-radius: 25px;
+    border: var(--borders) 3px solid;
     padding: 20px;
 }
 
@@ -51,7 +52,7 @@ body {
     margin-bottom: 20px;
 }
 
-#password-input {
+#username-input {
     width: 100%;
     padding: 12px;
     margin-bottom: 10px;
@@ -63,10 +64,16 @@ body {
     outline: none;
 }
 
-#password-requirements {
+#username-requirements-1 {
     color: white;
     font-size: 12px;
-    margin: 10px 0 20px 0;
+    margin-bottom: 10px;
+}
+
+#username-requirements-2 {
+    color: white;
+    font-size: 12px;
+    margin-bottom: 30px;
 }
 
 #submit-button {
@@ -78,23 +85,5 @@ body {
     border-radius: 25px;
     font-size: 14px;
     cursor: pointer;
-    margin-bottom: 20px;
-}
-
-#terms-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    color: #666;
-    font-size: 12px;
-}
-
-#terms-checkbox {
-    margin-top: 2px;
-}
-
-#terms-text a {
-    color: white;
-    text-decoration: none;
-    text-decoration: underline;
+    text-transform: uppercase;
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nul - Nombre de Usuario</title>
+<link rel="stylesheet" href="user.css">
+ <!-- Firebase Scripts -->
+ <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics-compat.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="logo">Nul</div>
+        <div id="form-card">
+            <div id="form-title">Nombre de usuario</div>
+            <input type="text" id="username-input" placeholder="Nombre de usuario" autocomplete="off">
+            <div id="username-requirements-1">
+                El nombre de usuario puede contener letras, números, guiones bajos y puntos.
+            </div>
+            <div id="username-requirements-2">
+                El nombre de usuario solo se puede cambiar una vez cada 30 días.
+            </div>
+            <button id="submit-button">Siguiente</button>
+        </div>
+    </div>
+    <script src="../main.js"></script>
+</body>
+</html>

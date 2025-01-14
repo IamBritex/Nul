@@ -8,6 +8,11 @@
     src: url('../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
 }
 
+:root {
+    --background-general: #07080a;
+    --borders: #15151f;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -26,7 +31,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #000;
+    background-color: var(--background-general);
     padding: 20px;
 }
 
@@ -42,9 +47,8 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 2rem;
-    background-color: rgb(21, 21, 31);
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgb(21, 21, 31);
+    border-radius: 25px;
+    border: 3px var(--borders) solid;
 }
 
 #welcome-text {
@@ -79,7 +83,7 @@ body {
     padding: 1rem;
     margin: 0.5rem 0;
     border: none;
-    border-radius: 8px;
+    border-radius: 25px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
@@ -91,6 +95,7 @@ body {
 }
 
 .btn-primary {
+    border-radius: 25px;
     background-color: #1C2022;
     color: white;
 }
@@ -121,4 +126,60 @@ body {
 .google-icon {
     width: 20px;
     height: 20px;
+}
+
+.message-success {
+    color: green;
+}
+
+#modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal p {
+    margin: 10px 0;
+}
+
+.modal button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #0056b3;
+}
+
+.modal.success {
+    border: 2px solid #28a745;
+}
+
+.modal.error {
+    border: 2px solid #dc3545;
+}
+
+.modal.warning {
+    border: 2px solid #ffc107;
 }

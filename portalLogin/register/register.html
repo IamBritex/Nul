@@ -5,18 +5,23 @@
     <link rel="stylesheet" href="register.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear cuenta - Nul</title>
+<!-- Firebase Scripts -->
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics-compat.js"></script>
 </head>
-<body>
-    <div class="main-logo">Nul</div>
-    <div class="signup-container">
-        <h1 class="title">Crear cuenta de Nul</h1>
-        
-        <div class="options">
-        <input type="email" class="input-field" placeholder="Correo electrónico">
-        <p class="helper-text">Inicie introduciendo su correo electrónico con el que quiere crear una cuenta de Nul</p>
-        
-        <button class="btn">Siguiente</button>
+<body data-page="register">
+    <div id="main-logo">Nul</div>
+    <div id="signup-container">
+        <h1 id="title">Crear cuenta de Nul</h1>
+        <div id="options">
+            <input type="email" id="email-field" placeholder="Correo electrónico" autocomplete="off">
+            <p id="helper-text">Inicie introduciendo su correo electrónico con el que quiere crear una cuenta de Nul</p>
+            <button id="next-btn">Siguiente</button>
         </div>
     </div>
+    <div id="toast-container" class="toast-container"></div>
+    <script type="module" src="main.js"></script>
 </body>
 </html>

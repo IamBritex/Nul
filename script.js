@@ -16,52 +16,36 @@ const uploadFileBtn = document.getElementById('upload-file-btn');
 const closeModal = document.getElementById('close-modal');
 const modalBackdrop = document.getElementById('modal-backdrop');
 
-const cloudName = "dbdrdkngr"; 
-const uploadPreset = "ml_default";
-  
 firebase.initializeApp(firebaseConfig);
-  
+
 const auth = firebase.auth();
 const db = firebase.firestore();
-  
-const loginButton = document.getElementById('login-button');
+
 const logoutButton = document.getElementById('logout-button');
 const userSection = document.getElementById('user-section');
 const userNameSpan = document.getElementById('user-name');
-const newUsernameInput = document.getElementById('new-username');
-const saveUsernameButton = document.getElementById('save-username');
 const friendSearch = document.getElementById('friend-search');
 const friendList = document.getElementById('friend-list');
-  
+
 let currentUser = null;
-  
-loginButton.addEventListener('click', signInWithGoogle);
+
 logoutButton.addEventListener('click', signOut);
 friendSearch.addEventListener('input', debounce(searchFriends, 300));
-userNameSpan.addEventListener('click', showUsernameInput);
-saveUsernameButton.addEventListener('click', changeUsername);
-  
-function signInWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).catch(error => {
-        console.error("Error al iniciar sesión:", error);
-    });
-}
-  
+
 function signOut() {
     auth.signOut().catch(error => {
         console.error("Error al cerrar sesión:", error);
     });
 }
-  
+
 function searchFriends() {
     const searchTerm = friendSearch.value.trim().toLowerCase();
     friendList.innerHTML = '';
-  
+
     if (searchTerm.length === 0) {
         return;
     }
-  
+
     db.collection('users')
         .orderBy('name')
         .startAt(searchTerm)
@@ -88,82 +72,37 @@ function searchFriends() {
             console.error("Error al buscar usuarios:", error);
         });
 }
-  
-// Función para iniciar chat
-function startChat(friendId, friendUsername) {
-    console.log('Iniciando chat con:', friendId, friendUsername);
-    localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, username: friendUsername }));
+
+function startChat(friendId, friendName) {
+    console.log('Iniciando chat con:', friendId, friendName);
+    localStorage.setItem('currentChatFriend', JSON.stringify({ id: friendId, name: friendName }));
     window.location.href = './chat/chat.html';
 }
-  
-function showUsernameInput() {
-    userNameSpan.style.display = 'none';
-    newUsernameInput.style.display = 'inline-block';
-    saveUsernameButton.style.display = 'inline-block';
-    newUsernameInput.value = userNameSpan.textContent.slice(1);
-    newUsernameInput.focus();
-}
-  
-function changeUsername() {
-    let newUsername = newUsernameInput.value.trim().toLowerCase();
-    if (newUsername && newUsername !== currentUser.username) {
-        db.collection('users').where('username', '==', newUsername).get()
-            .then((snapshot) => {
-                if (snapshot.empty) {
-                    return db.collection('users').doc(currentUser.uid).update({
-                        username: newUsername
-                    });
-                } else {
-                    throw new Error('El nombre de usuario ya existe');
-                }
-            })
-            .then(() => {
-                userNameSpan.textContent = `@${newUsername}`;
-                currentUser.username = newUsername;
-                newUsernameInput.style.display = 'none';
-                saveUsernameButton.style.display = 'none';
-                userNameSpan.style.display = 'inline-block';
-            })
-            .catch((error) => {
-                alert(error.message);
-            });
-    }
-}
-  
-function debounce(func, delay) {
-    let timeoutId;
-    return function (...args) {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => func.apply(this, args), delay);
-    };
-}
-  
+
 auth.onAuthStateChanged((user) => {
     if (user) {
         console.log('Usuario autenticado en script.js:', user.uid);
         currentUser = user;
-        loginButton.style.display = 'none';
         logoutButton.style.display = 'inline-block';
         userSection.style.display = 'block';
 
         db.collection('users').doc(user.uid).get().then((doc) => {
-            if (doc.exists && doc.data().username) {
-                currentUser.username = doc.data().username;
-                userNameSpan.textContent = `@${currentUser.username}`;
-                console.log('Nombre de usuario existente:', currentUser.username);
-                document.title = `${currentUser.username} Nul`;
+            if (doc.exists && doc.data().name) {
+                currentUser.name = doc.data().name;
+                userNameSpan.textContent = `@${currentUser.name}`;
+                document.title = `${currentUser.name} Nul`;
             } else {
-                const username = user.displayName.toLowerCase().replace(/\s+/g, '_');
+                const name = user.displayName.toLowerCase().replace(/\s+/g, '_');
                 db.collection('users').doc(user.uid).set({
-                    username: username,
+                    name: name,
                     email: user.email
                 }, { merge: true }).then(() => {
-                    console.log('Nuevo nombre de usuario creado:', username);
-                    currentUser.username = username;
-                    userNameSpan.textContent = `@${username}`;
-                    document.title = `${username} Nul`;
+                    console.log('Nuevo nombre creado:', name);
+                    currentUser.name = name;
+                    userNameSpan.textContent = `@${name}`;
+                    document.title = `${name} Nul`;
                 }).catch((error) => {
-                    console.error('Error al crear el nombre de usuario:', error);
+                    console.error('Error al crear el nombre:', error);
                 });
             }
         }).catch((error) => {
@@ -172,11 +111,9 @@ auth.onAuthStateChanged((user) => {
     } else {
         console.log('No hay usuario autenticado en script.js');
         currentUser = null;
-        loginButton.style.display = 'inline-block';
         logoutButton.style.display = 'none';
         userSection.style.display = 'none';
         friendList.innerHTML = '';
-        
         window.location.href = 'portalLogin/login.html';
     }
 });
@@ -212,10 +149,10 @@ uploadFileBtn.addEventListener('click', async () => {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', uploadPreset);
+    formData.append('upload_preset', 'ml_default');
 
     try {
-        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/dbdrdkngr/image/upload`, {
             method: 'POST',
             body: formData,
         });

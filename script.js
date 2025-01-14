@@ -38,6 +38,14 @@ function signOut() {
     });
 }
 
+function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
 function searchFriends() {
     const searchTerm = friendSearch.value.trim().toLowerCase();
     friendList.innerHTML = '';
@@ -81,7 +89,7 @@ function startChat(friendId, friendName) {
 
 auth.onAuthStateChanged((user) => {
     if (user) {
-        console.log('Usuario autenticado en script.js:', user.uid);
+        console.log('Usuario autenticado:', user.uid);
         currentUser = user;
         logoutButton.style.display = 'inline-block';
         userSection.style.display = 'block';
@@ -109,24 +117,12 @@ auth.onAuthStateChanged((user) => {
             console.error('Error al obtener el documento del usuario:', error);
         });
     } else {
-        console.log('No hay usuario autenticado en script.js');
+        console.log('No hay usuario autenticado.');
         currentUser = null;
         logoutButton.style.display = 'none';
         userSection.style.display = 'none';
         friendList.innerHTML = '';
-        window.location.href = 'portalLogin/login.html';
-    }
-});
-
-auth.onAuthStateChanged((user) => {
-    if (user) {
-        db.collection('users').doc(user.uid).get().then((doc) => {
-            if (doc.exists && doc.data().profilePicture) {
-                profilePicture.src = doc.data().profilePicture;
-            }
-        }).catch((error) => {
-            console.error('Error al obtener la foto de perfil del usuario:', error);
-        });
+        window.location.href = './login.html';
     }
 });
 

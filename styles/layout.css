@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'nothing';
+    src: url('../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'oxigen';
+    src: url('../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+}
+
+:root {
+    --background-general: #07080a;
+    --borders: #15151f;
+    --background-buttons: #1C2022;
+    --secondary-color: #CE262C;
+}

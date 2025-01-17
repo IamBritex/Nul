@@ -1,22 +1,24 @@
 @font-face {
     font-family: 'nothing';
-    src: url('../../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+    src: url('../../../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'oxigen';
-    src: url('../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+    src: url('../../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
 }
 
 :root {
     --background-general: #07080a;
     --borders: #15151f;
+    --background-buttons: #1C2022;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'oxigen';
 }
 
 body {
@@ -29,31 +31,31 @@ body {
     padding: 20px;
 }
 
-#main-logo {
+.main-logo {
     font-family: 'nothing';
-    font-size: 2.5rem;
+    font-size: 55px;
     color: white;
     margin-bottom: 2rem;
     letter-spacing: 4px;
 }
 
-#signup-container {
-    font-family: 'oxigen';
+.signup-container {
     width: 100%;
     max-width: 400px;
     padding: 2rem;
-    border-radius: 25px;
-    border: 3px var(--borders) solid;
+    border: var(--borders) 3px solid;
+    background-color: transparent;
+    border-radius: 20px;
 }
 
-#title {
+.title {
     color: white;
     font-size: 1.2rem;
     margin-bottom: 2rem;
     font-weight: normal;
 }
 
-#helper-text {
+.helper-text {
     color: white;
     font-size: 0.8rem;
     margin: 0.5rem 0 2rem 0;
@@ -77,10 +79,10 @@ body {
 
 #email-field:focus {
     outline: none;
-    border-bottom-color: #666;
+    border-bottom-color: white;
 }
 
-#next-btn {
+.btn {
     width: 100%;
     padding: 1rem;
     margin-top: 1rem;
@@ -88,64 +90,19 @@ body {
     border-radius: 25px;
     font-size: 0.9rem;
     cursor: pointer;
-    background-color: #1C2022;
+    background-color: var(--background-buttons);
     color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: background-color 0.3s;
 }
 
-#next-btn:hover {
+.btn:disabled {
+    background-color: #d3d3d3;
+    color: #808080;
+    cursor: pointer;
+}
+
+.btn:hover {
     background-color: #333;
-}
-
-.toast-container {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.toast {
-    background-color: #323232;
-    color: #fff;
-    padding: 15px 20px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards, fadeOut 0.5s 3s forwards;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.toast.success {
-    background-color: #4caf50;
-}
-
-.toast.error {
-    background-color: #f44336;
-}
-
-.toast.info {
-    background-color: #2196f3;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
 }

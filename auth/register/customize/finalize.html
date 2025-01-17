@@ -1,14 +1,11 @@
-<!DOCTYPE html>
+<!DOCTYPE html lang="es">
 <html>
 <head>
-    <link rel="stylesheet" href="welcome.css">
+    <link rel="stylesheet" href="finalize.css">
     <title>Welcome</title>
-    <!-- Cargar los SDK clásicos de Firebase desde el CDN sin módulos -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    
-    <!-- Otros estilos y scripts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=upload" />
@@ -23,15 +20,17 @@
             <div id="profile-circle">
                 <span id="profile-icon" class="material-icons">person</span>
                 <div id="upload-circle">
-                    <span id="upload-icon" class="material-symbols-outlined">upload</span>
+                    <span id="upload-icon" class="material-icons">edit</span>
                 </div>
             </div>
             <div id="name">Nul</div>
             <div id="email">nul@example.com</div>
-            <div id="footer-text">Puedes pasarte por la página del desarrollo de <a href="http://" target="_blank" rel="noopener noreferrer">Nul</a> para apoyarnos desde cerca, ya que nuestro proyecto fue creado con 💖.</div>
-            <button id="start-button"><a href="../../index.html">COMENZAR</a></button>
+            <div id="footer-text">Puedes pasarte por la página del desarrollo de <a href="http://" target="_blank" rel="noopener noreferrer">Nul</a>
+                 para apoyarnos desde cerca, ya que nuestro proyecto fue creado con 💖.
+            </div>
+            <button id="start-button"><a href="../../../home/chats.html">COMENZAR</a></button>
         </div>
     </div>
-    <script src="welcome.js"></script>
+    <script src="finalize.js"></script>
 </body>
 </html>

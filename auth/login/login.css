@@ -1,0 +1,170 @@
+@font-face {
+    font-family: 'nothing';
+    src: url('../../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'oxigen';
+    src: url('../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+}
+
+:root {
+    --background-general: #07080a;
+    --borders: #15151f;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'oxigen';
+}
+
+body {
+    background-color: var(--background-general);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: var(--borders) 3px solid;
+    border-radius: 25px;
+}
+
+#title {
+    color: white;
+    text-align: center;
+    font-size: 55px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    font-family: 'nothing';
+}
+
+#welcome-text {
+    color: white;
+    text-align: center;
+    font-size: 17px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+#email-input, 
+#password-input {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-bottom: 1px solid #1C2022;
+    padding: 16px;
+    border-radius: 8px;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    outline: none;
+}
+
+#email-input::placeholder, 
+#password-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#continue-btn,
+#create-account,
+#google-btn {
+    background-color: #1C2022;
+    border: #1C2022 1px solid;
+    color: white;
+    padding: 16px;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s;
+}
+
+#continue-btn:hover,
+#create-account:hover,
+#google-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#or-divider {
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    margin: 20px 0;
+    font-size: 13px;
+    position: relative;
+}
+
+#google-btn {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#google-icon {
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 480px) {
+    #container {
+        padding: 20px 16px;
+    }
+    
+    #title {
+        font-size: 28px;
+    }
+    
+    #welcome-text {
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+}
+
+.notification {
+    margin-top: 8px;
+    font-size: 14px;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.error-notification {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.account-not-found {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.wrong-password {
+    background-color: #e2e3e5;
+    color: #383d41;
+    border: 1px solid #d6d8db;
+}
+
+.google-created-account {
+    background-color: #cce5ff;
+    color: #004085;
+    border: 1px solid #b8daff;
+}

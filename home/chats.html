@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="chats.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
+  <div id="header">
+    <div id="header-left">
+      <span class="material-symbols-outlined" style="color: #CE262C;">menu</span>
+      <span id="title">Chats</span>
+    </div>
+    <div id="search-container">
+      <input type="text" id="search-input" placeholder="Buscar usuario..." />
+      <span class="material-symbols-outlined" id="search-icon" style="color: #CE262C;">search</span>
+    </div>
+  </div>
+  
+
+  <div id="chat-container">
+    <div id="chat-item">
+      <div id="avatar">
+        <img src="https://res.cloudinary.com/dbdrdkngr/image/upload/v1737088020/Muse_Dash_GIF_-_Muse_Dash_-_Temukan_Bagikan_GIF_dwm2cq.gif" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%;">
+        <span class="material-symbols-outlined" style="color: #8E8E8E;">person</span>
+        <div id="online-dot"></div>
+      </div>
+      <div id="chat-content">
+        <div id="chat-header">
+          <span id="chat-name">Nul</span>
+          <span id="chat-time">8:00 PM</span>
+        </div>
+        <div id="chat-message">
+          <span>video prueba.mkv</span>
+          <span id="unread-count">3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-nav">
+    <span class="material-symbols-outlined" id="nav-active">chat</span>
+    <span class="material-symbols-outlined" id="nav-inactive">search</span>
+    <span class="material-symbols-outlined" id="nav-inactive">group</span>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
+  <script type="module" src="../scriptStyle/chatsSearch.js"></script>
+  <script type="module" src="chats.js"></script>
+  <script>
+    const searchIcon = document.getElementById('search-icon');
+    const searchContainer = document.getElementById('search-container');
+  
+    searchIcon.addEventListener('click', () => {
+      searchContainer.classList.toggle('expanded');
+    });
+  </script>
+</body>
+</html>

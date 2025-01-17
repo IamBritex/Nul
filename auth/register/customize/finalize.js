@@ -12,8 +12,26 @@ const CONFIG = {
         url: "https://api.cloudinary.com/v1_1/dbdrdkngr/image/upload",
         preset: "ml_default"
     },
-    maxFileSize: 5 * 1024 * 1024 // 5MB
+    maxFileSize: 1 * 1024 * 1024 // 1MB
 };
+
+function showToast(message, type = "success") {
+    const toast = document.createElement("div");
+    toast.classList.add("toast");
+    toast.classList.add(type);
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    // Remueve la tostada después de 3 segundos
+    setTimeout(() => {
+        toast.classList.add("fade-out");
+        setTimeout(() => {
+            toast.remove();
+        }, 500); // Tiempo para que desaparezca la tostada
+    }, 3000);
+}
+
 
 if (!firebase.apps.length) {
     firebase.initializeApp(CONFIG.firebase);
@@ -74,26 +92,21 @@ class ProfileManager {
     }
 
     updateUIWithUserData(userData) {
-        const { name, email, profilePicture, firstLogin } = userData;
-
+        const { name, email, profilePicture } = userData;
+    
         this.elements.nameElement.textContent = name || "Nul";
         this.elements.emailElement.textContent = email || "nul@example.com";
         this.updatePageTitle(name || "Nul");
-
-        this.elements.welcomeText.textContent = firstLogin
-            ? "Encantado de conocerle"
-            : "Gracias por volver a unirse a la comunidad de Nul.";
-        this.elements.subText.textContent = firstLogin
-            ? "Gracias por unirse a la comunidad de Nul. Estamos encantados de contar con usted."
-            : "Estamos encantados de contar de vuelta con usted.";
-
+        this.elements.welcomeText.textContent = "Bienvenido a Nul.";
+        this.elements.subText.textContent = "Estamos encantados de contar con usted.";
+    
         if (profilePicture) {
             this.setProfilePicture(profilePicture);
         } else {
             this.elements.profileCircle.style.backgroundImage = "none";
             this.elements.profileIcon.style.display = "block";
         }
-    }
+    }    
 
     handleAuthStateChanged(user) {
         if (user) {
@@ -111,7 +124,7 @@ class ProfileManager {
     createFileInput() {
         const fileInput = document.createElement("input");
         fileInput.type = "file";
-        fileInput.accept = "image/gif*";
+        fileInput.accept = "image/*";
         fileInput.onchange = this.handleFileSelection.bind(this);
         return fileInput;
     }
@@ -121,22 +134,42 @@ class ProfileManager {
         if (!file) return;
     
         if (file.size > CONFIG.maxFileSize) {
-            alert("La imagen es demasiado grande. Por favor, seleccione una imagen menor a 5MB.");
+            showToast("La imagen es demasiado grande. Por favor, seleccione una imagen menor a 1MB.", "error");
             return;
         }
     
-        // Verificar si el archivo es un GIF
         const isGif = file.type === "image/gif";
         if (isGif) {
             this.uploadGifDirectly(file);
             return;
         }
     
-        // Procesar otros tipos de imagen con Cropper.js
         const reader = new FileReader();
         reader.onload = (e) => this.showImageCropper(e.target.result);
         reader.readAsDataURL(file);
     }
+    
+    async uploadGifDirectly(file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CONFIG.cloudinary.preset);
+    
+        try {
+            const response = await fetch(CONFIG.cloudinary.url, {
+                method: "POST",
+                body: formData
+            });
+    
+            const data = await response.json();
+            if (data.secure_url) {
+                this.updateUserProfile(data.secure_url);
+                showToast("GIF subido correctamente.", "success");
+            }
+        } catch (error) {
+            console.error("Error al subir el GIF:", error);
+            showToast("Error al subir el GIF.", "error");
+        }
+    }    
     
     async uploadGifDirectly(file) {
         const formData = new FormData();
@@ -158,7 +191,6 @@ class ProfileManager {
         }
     }
     
-
     showImageCropper(imageSrc) {
         this.cleanupCropper();
         

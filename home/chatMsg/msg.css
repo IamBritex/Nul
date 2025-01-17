@@ -1,11 +1,11 @@
 @font-face {
     font-family: 'nothing';
-    src: url('../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+    src: url('../../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'oxigen';
-    src: url('../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+    src: url('../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
 }
 
 * {
@@ -221,6 +221,42 @@ body {
 #friend-name {
     font-family: 'nothing'; /* Respaldo añadido */
 }
+
+/* Estilo general para los mensajes */
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.sent {
+    align-self: flex-end;
+}
+
+.received {
+    align-self: flex-start;
+}
+
+/* Encabezado del mensaje: nombre y hora */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: #8e8e8e;
+}
+
+.sender-name {
+    font-weight: bold;
+}
+
+.message-time {
+    margin-left: 10px;
+    font-style: italic;
+}
+
 
 @media screen and (max-width: 320px) {
     #chat-input-container {

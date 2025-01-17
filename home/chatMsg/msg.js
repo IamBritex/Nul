@@ -61,8 +61,8 @@ function loadFriendProfile() {
                     const imgElement = document.createElement('img');
                     imgElement.src = profilePic;
                     imgElement.alt = friendData.name || 'Amigo';
-                    imgElement.style.width = '50px';
-                    imgElement.style.height = '50px';
+                    imgElement.style.width = 'clamp(32px, 8vw, 40px)';
+                    imgElement.style.height = 'clamp(32px, 8vw, 40px)';
                     imgElement.style.borderRadius = '50%';
 
                     // Manejo si no carga la imagen
@@ -158,62 +158,115 @@ function loadMessages() {
     }
 }
 
+function formatMessageTime(timestamp) {
+    const now = new Date();
+    const date = new Date(timestamp.toDate());
+    const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+
+    const hours = date.getHours() % 12 || 12;
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const ampm = date.getHours() >= 12 ? 'p.m.' : 'a.m.';
+
+    if (diffDays === 0) return `Hoy a las ${hours}:${minutes} ${ampm}`;
+    if (diffDays === 1) return `Ayer a las ${hours}:${minutes} ${ampm}`;
+    if (diffDays === 2) return `Anteayer a las ${hours}:${minutes} ${ampm}`;
+    if (diffDays <= 7) {
+        return `${date.toLocaleDateString('es-ES', { weekday: 'long' })} a las ${hours}:${minutes} ${ampm}`;
+    }
+    return `${date.toLocaleDateString('es-ES', options)} a las ${hours}:${minutes} ${ampm}`;
+}
+
+let lastSender = null;
+let lastMessageDate = null;
+
 function displayMessage(message) {
     const isSender = message.sender === currentUser.uid;
     const senderName = isSender ? "Tú" : currentChat.name || "Amigo";
-    const messageTime = message.time ?
-        new Date(message.time.toDate()).toLocaleString('es-ES', {
-            hour: '2-digit',
-            minute: '2-digit',
-            day: '2-digit',
-            month: 'short',
-        }) : "Enviando...";
+    const messageDate = new Date(message.time.toDate());
+    const formattedDate = getFormattedDate(messageDate);
+    const messageTime = formatMessageTime(message.time);
 
-    // Contenedor principal del mensaje
+    // Insertar separador de fecha si cambia la fecha
+    if (formattedDate !== lastMessageDate) {
+        const dateSeparator = document.createElement('div');
+        dateSeparator.classList.add('date-separator');
+        dateSeparator.textContent = formattedDate;
+        chatMessages.appendChild(dateSeparator);
+        lastMessageDate = formattedDate;
+    }
+
+    // Crear encabezado solo si cambia el remitente
+    if (message.sender !== lastSender) {
+        const header = document.createElement('div');
+        header.classList.add('message-header');
+
+        const nameElement = document.createElement('span');
+        nameElement.classList.add('sender-name');
+        nameElement.textContent = senderName;
+
+        const timeElement = document.createElement('span');
+        timeElement.classList.add('message-time');
+        timeElement.textContent = messageTime;
+
+        header.appendChild(nameElement);
+        header.appendChild(timeElement);
+        chatMessages.appendChild(header);
+
+        lastSender = message.sender;
+    }
+
+    // Crear el contenedor del mensaje
     const messageWrapper = document.createElement('div');
     messageWrapper.classList.add('message-wrapper', isSender ? 'sent' : 'received');
 
-    // Contenedor del encabezado (nombre y hora)
-    const messageHeader = document.createElement('div');
-    messageHeader.classList.add('message-header');
-
-    const nameElement = document.createElement('span');
-    nameElement.classList.add('sender-name');
-    nameElement.textContent = senderName;
-
-    const timeElement = document.createElement('span');
-    timeElement.classList.add('message-time');
-    timeElement.textContent = `(${messageTime})`;
-
-    // Agregar elementos al encabezado
-    messageHeader.appendChild(nameElement);
-    messageHeader.appendChild(timeElement);
-
-    // Contenedor del texto del mensaje
     const messageElement = document.createElement('div');
     messageElement.classList.add('message-content');
 
-    // Detectar enlaces en el mensaje
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
-    if (urlRegex.test(message.text)) {
-        const linkElement = document.createElement('a');
-        linkElement.href = message.text.match(urlRegex)[0];
-        linkElement.target = '_blank';
-        linkElement.rel = 'noopener noreferrer';
-        linkElement.textContent = message.text;
-        linkElement.style.textDecoration = 'underline';
-        messageElement.appendChild(linkElement);
+    // Detectar enlaces y formatear
+    const linkRegex = /(https?:\/\/[^\s]+)/g;
+    if (linkRegex.test(message.text)) {
+        const parts = message.text.split(linkRegex);
+
+        parts.forEach((part) => {
+            if (linkRegex.test(part)) {
+                const linkElement = document.createElement('a');
+                linkElement.href = part;
+                linkElement.textContent = part;
+                linkElement.target = "_blank"; // Abre en una nueva pestaña
+                linkElement.style.color = "#CE262C";
+                linkElement.style.textDecoration = "underline";
+                messageElement.appendChild(linkElement);
+            } else {
+                const textNode = document.createTextNode(part);
+                messageElement.appendChild(textNode);
+            }
+        });
     } else {
         messageElement.textContent = message.text;
     }
 
-    // Ensamblar los elementos
-    messageWrapper.appendChild(messageHeader);
     messageWrapper.appendChild(messageElement);
-
-    // Agregar al contenedor del chat
     chatMessages.appendChild(messageWrapper);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Función para formatear las fechas como Hoy, Ayer, etc.
+function getFormattedDate(date) {
+    const now = new Date();
+    const differenceInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+
+    if (differenceInDays === 0) {
+        return "Hoy";
+    } else if (differenceInDays === 1) {
+        return "Ayer";
+    } else if (differenceInDays === 2) {
+        return "Anteayer";
+    } else if (differenceInDays < 7) {
+        return date.toLocaleDateString('es-ES', { weekday: 'long' });
+    } else {
+        return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
 }
 
 // Maneja el estado de autenticación

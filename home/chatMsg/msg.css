@@ -5,7 +5,7 @@
 
 @font-face {
     font-family: 'oxigen';
-    src: url('../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+    src: url('../../../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
 }
 
 * {
@@ -119,13 +119,6 @@ body {
     font-family: 'oxigen';
 }
 
-/* Nombre del remitente */
-.sender-name {
-    font-weight: bold;
-    font-size: 14px;
-    margin: 5px 10px;
-}
-
 .message.sent {
     color: white; 
     align-self: flex-start; 
@@ -219,10 +212,9 @@ body {
 }
 
 #friend-name {
-    font-family: 'nothing'; /* Respaldo añadido */
+    font-family: 'nothing'; 
 }
 
-/* Estilo general para los mensajes */
 .message-wrapper {
     display: flex;
     flex-direction: column;
@@ -239,22 +231,34 @@ body {
     align-self: flex-start;
 }
 
-/* Encabezado del mensaje: nombre y hora */
-.message-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2px;
+.sender-name {
+    font-weight: bold;
+    color: #ffffff;
+    margin-right: 10px;
+}
+
+.message-time {
     font-size: 12px;
     color: #8e8e8e;
 }
 
-.sender-name {
+.date-separator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    color: #8e8e8e;
+    font-size: 12px;
     font-weight: bold;
+    position: relative;
 }
 
-.message-time {
-    margin-left: 10px;
-    font-style: italic;
+.date-separator::before,
+.date-separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #8e8e8e;
+    margin: 0 10px;
 }
 
 

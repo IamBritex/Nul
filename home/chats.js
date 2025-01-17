@@ -8,6 +8,7 @@ import {
     doc, 
     updateDoc, 
     addDoc, 
+    getDoc,
     onSnapshot 
 } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 import { 
@@ -182,3 +183,70 @@ onAuthStateChanged(auth, async (user) => {
         window.location.href = "../index.html";
     }
 });
+
+const menuIcon = document.querySelector('.menu-icon');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+// Alternar sidebar
+menuIcon.addEventListener('click', () => {
+  sidebar.classList.toggle('active');
+  overlay.classList.toggle('active');
+});
+
+// Cerrar sidebar al hacer clic fuera de él
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('active');
+  overlay.classList.remove('active');
+});
+
+
+async function loadSidebarUserData(currentUserId) {
+    const userRef = doc(db, "users", currentUserId);
+    const userDoc = await getDoc(userRef);
+  
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      const profilePicture = userData.profilePicture;
+      const userName = userData.name;
+  
+      // Actualizar el nombre de usuario
+      const userNameElement = document.getElementById("user-name");
+      userNameElement.textContent = userName || "Usuario";
+  
+      // Actualizar la foto de perfil
+      const profilePictureElement = document.getElementById("profile-picture");
+  
+      if (profilePicture) {
+        // Reemplazar el span por una imagen si hay foto de perfil
+        const imgElement = document.createElement("img");
+        imgElement.src = profilePicture;
+        imgElement.alt = "Foto de perfil";
+        imgElement.style.width = "100px";
+        imgElement.style.height = "100px";
+        imgElement.style.borderRadius = "50%";
+  
+        profilePictureElement.replaceWith(imgElement);
+      }
+    } else {
+      console.log("No se encontró información del usuario.");
+    }
+  }
+  
+  // Observa el estado del usuario autenticado
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const currentUserId = user.uid;
+      loadSidebarUserData(currentUserId);
+    } else {
+      console.log("Usuario no autenticado.");
+      window.location.href = "../index.html";
+    }
+  });
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loadSidebarUserData(user.uid);
+    }
+  });
+  

@@ -7,7 +7,7 @@
 <body>
   <div id="header">
     <div id="header-left">
-      <span class="material-symbols-outlined" style="color: #CE262C;">menu</span>
+      <span class="material-symbols-outlined menu-icon" style="color: #CE262C;">menu</span>
       <span id="title">Chats</span>
     </div>
     <div id="search-container">
@@ -16,22 +16,35 @@
     </div>
   </div>
   
+  <div id="sidebar">
+    <div id="sidebar-header">
+      <span id="profile-picture" class="material-symbols-outlined" style="color: #8E8E8E;">person</span>
+      <span id="user-name">Usuario</span>
+    </div>
+    <ul id="menu">
+      <li>Nuevo grupo</li>
+      <li>Amigos</li>
+      <li>Llamadas</li>
+      <li>Mensajes guardados</li>
+      <li>Invitar amigos</li>
+    </ul>
+  </div>
+  <div id="overlay"></div>
 
   <div id="chat-container">
     <div id="chat-item">
       <div id="avatar">
-        <img src="https://res.cloudinary.com/dbdrdkngr/image/upload/v1737088020/Muse_Dash_GIF_-_Muse_Dash_-_Temukan_Bagikan_GIF_dwm2cq.gif" alt="avatar" style="width: 40px; height: 40px; border-radius: 50%;">
         <span class="material-symbols-outlined" style="color: #8E8E8E;">person</span>
         <div id="online-dot"></div>
       </div>
       <div id="chat-content">
         <div id="chat-header">
-          <span id="chat-name">Nul</span>
-          <span id="chat-time">8:00 PM</span>
+          <span id="chat-name"></span>
+          <span id="chat-time"></span>
         </div>
         <div id="chat-message">
-          <span>video prueba.mkv</span>
-          <span id="unread-count">3</span>
+          <span></span>
+          <span id="unread-count"></span>
         </div>
       </div>
     </div>
@@ -42,6 +55,7 @@
     <span class="material-symbols-outlined" id="nav-inactive">search</span>
     <span class="material-symbols-outlined" id="nav-inactive">group</span>
   </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore-compat.js"></script>
   <script type="module" src="../scriptStyle/chatsSearch.js"></script>

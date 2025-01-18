@@ -30,39 +30,39 @@ body {
 #header {
   display: flex;
   align-items: center;
-  padding: 16px 20px; /* Aumenta el padding */
+  padding: 12px 15px;
   background: transparent;
-  gap: 12px;
+  gap: 8px;
 }
 
 #header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex: 1;
 }
 
 #title {
   color: #fff;
-  font-size: 36px; /* Incrementa el tamaño del texto */
+  font-size: 30px;
   font-family: 'nothing';
 }
 
 #chat-container {
   overflow-y: auto;
-  height: calc(100vh - 140px); /* Ajusta altura disponible */
+  height: calc(100vh - 120px);
 }
 
 #chat-item {
   display: flex;
-  padding: 16px 20px; /* Aumenta el padding */
+  padding: 12px 15px;
   align-items: center;
   border-bottom: 1px solid transparent;
 }
 
 #avatar {
-  width: 56px; /* Aumenta tamaño del avatar */
-  height: 56px;
+  width: 48px;
+  height: 48px;
   background: #1E2028;
   border-radius: 50%;
   position: relative;
@@ -75,15 +75,15 @@ body {
   position: absolute;
   bottom: 2px;
   right: 2px;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   background: #44B37F;
   border-radius: 50%;
   border: 2px solid #15181F;
 }
 
 #chat-content {
-  margin-left: 16px; /* Más espacio entre el avatar y el contenido */
+  margin-left: 12px;
   flex: 1;
 }
 
@@ -91,22 +91,22 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 #chat-name {
   color: #fff;
-  font-size: 16px; /* Texto más grande */
+  font-size: 14px;
 }
 
 #chat-time {
   color: #8E8E8E;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 #chat-message {
   color: #8E8E8E;
-  font-size: 15px; /* Más legible */
+  font-size: 13px;
   display: flex;
   justify-content: space-between;
 }
@@ -114,10 +114,10 @@ body {
 #unread-count {
   background: var(--secondary-color);
   color: white;
-  padding: 3px 8px; /* Botón más amplio */
-  border-radius: 10px;
-  font-size: 14px;
-  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 12px;
+  min-width: 18px;
   text-align: center;
 }
 
@@ -127,63 +127,220 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-around;
-  padding: 20px; /* Más padding */
+  padding: 15px;
   background: #15181F;
   border-top: 1px solid #1E2028;
 }
 
 #nav-active {
   color: #327AD4;
-  font-size: 16px; /* Texto más grande */
 }
 
 #nav-inactive {
   color: #8E8E8E;
-  font-size: 14px;
 }
 
-/* Ajustes para pantallas pequeñas */
+#search-container {
+  color: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 40px;
+  transition: width 0.3s ease;
+}
+
+#search-icon {
+  cursor: pointer;
+}
+
+#search-container.expanded {
+  width: 200px;
+}
+
+#search-input {
+  color: white;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  width: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#search-container.expanded #search-input {
+  opacity: 1;
+  background-color: transparent;
+}
+
+#sidebar-header {
+  text-align: center;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+#profile-picture {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: #333;
+}
+
+#user-name {
+  display: block;
+  font-size: 18px;
+  margin-left: 10px;
+  font-family: 'nothing';
+}
+
+#menu {
+  list-style: none;
+  padding: 0;
+}
+
+#menu li {
+  margin: 15px 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Sidebar */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: var(--background-general);
+  color: white;
+  transition: left 0.3s ease-out; /* Desliza el sidebar con un efecto más suave */
+  z-index: 1000; /* Asegúrate de que el sidebar se muestre sobre otros elementos */
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#sidebar.active {
+  left: 0; /* Desliza el sidebar hacia la derecha */
+}
+
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  display: block; /* Asegura que el overlay sea visible cuando se activa */
+  opacity: 0; /* Comienza invisible */
+  transition: opacity 0.3s ease-out; /* Desvanecimiento suave */
+}
+
+#overlay.active {
+  opacity: 1; /* Aumenta la opacidad cuando se activa */
+}
+
+#sidebar.active ~ * {
+  pointer-events: none;
+}
+
+#overlay.active {
+  pointer-events: auto; /* Permite interactuar con el overlay cuando está activo */
+}
+
+/* Menú */
+#menu li {
+  margin: 15px 0;
+  font-size: 16px;
+  cursor: pointer;
+  visibility: hidden; /* Ocultar el contenido cuando el sidebar no está activo */
+  opacity: 0; /* Comienza invisible */
+  transform: translateX(-20px); /* Desplazado hacia la izquierda */
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out; /* Animación de desvanecimiento y deslizamiento */
+}
+
+#sidebar.active #menu li {
+  visibility: visible; /* Hace visible el menú */
+  opacity: 1; /* Hace el menú visible con un desvanecimiento */
+  transform: translateX(0); /* Desliza los elementos del menú a su posición original */
+}
+
+#sidebar.active #menu li:nth-child(1) {
+  transition-delay: 0.1s; /* Retraso para el primer elemento */
+}
+
+#sidebar.active #menu li:nth-child(2) {
+  transition-delay: 0.2s; /* Retraso para el segundo elemento */
+}
+
+#sidebar.active #menu li:nth-child(3) {
+  transition-delay: 0.3s; /* Retraso para el tercer elemento */
+}
+
+/* Menú icon */
+.menu-icon {
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Efecto suave al hacer clic */
+  z-index: 1001; /* Aseguramos que el icono del menú esté encima del overlay */
+}
+
+#sidebar.active .menu-icon {
+  transform: rotate(90deg); /* Rota el icono del menú cuando el sidebar está activo */
+}
+
 @media (max-width: 768px) {
   #sidebar {
-    width: 60%; /* Sidebar un poco más ancho */
+    width: 60%; /* Aumentar el ancho del sidebar para pantallas medianas */
   }
 
   #title {
-    font-size: 28px; /* Texto más visible */
+    font-size: 24px; /* Título un poco más grande */
   }
 
   #profile-picture {
-    width: 70px; /* Ajusta avatar */
-    height: 70px;
+    width: 60px; /* Ajuste del tamaño de la imagen de perfil */
+    height: 60px;
   }
 
   #user-name {
-    font-size: 18px;
+    font-size: 16px; /* Tamaño de fuente más grande para el nombre */
   }
 
   #menu li {
-    font-size: 16px;
+    font-size: 14px; /* Ajuste del tamaño de los elementos del menú */
   }
 
   #bottom-nav {
-    padding: 15px;
+    padding: 10px; /* Un poco más de espacio en el fondo */
   }
 
   #chat-item {
-    padding: 12px 15px;
+    padding: 10px 12px; /* Aumento del padding para una mejor interacción */
   }
 
   #avatar {
-    width: 48px;
+    width: 48px; /* Ajuste del avatar para que sea más visible */
     height: 48px;
   }
 
   #chat-name {
-    font-size: 14px;
+    font-size: 14px; /* Tamaño de fuente más grande para el nombre del chat */
   }
 
   #chat-message {
-    font-size: 13px;
+    font-size: 14px; /* Un poco más grande para una mejor lectura */
+  }
+
+  /* Ajuste para la barra de búsqueda */
+  #search-container {
+    width: 150px; /* Ajuste del tamaño para pantallas medianas */
+  }
+
+  #search-container.expanded {
+    width: 200px;
   }
 }
 
@@ -191,31 +348,57 @@ body {
   #header {
     flex-direction: column;
     align-items: flex-start;
-    padding: 16px; /* Más espacio */
+    padding: 10px; /* Un poco más de espacio alrededor del encabezado */
   }
 
   #title {
-    font-size: 24px; /* Texto más grande */
+    font-size: 20px; /* Ajuste del tamaño del título para pantallas pequeñas */
   }
 
   #chat-name {
-    font-size: 14px; /* Ajusta proporciones */
+    font-size: 12px; /* Tamaño adecuado para nombres de chat */
   }
 
   #chat-message {
-    font-size: 13px;
+    font-size: 12px; /* Un poco más grande en pantallas pequeñas */
   }
 
   #menu li {
-    font-size: 14px;
+    font-size: 12px; /* Ajuste del tamaño del texto de los menús */
   }
 
   #profile-picture {
-    width: 60px; /* Tamaño moderado */
-    height: 60px;
+    width: 50px; /* Ajuste del tamaño de la imagen de perfil */
+    height: 50px;
   }
 
   #bottom-nav {
-    padding: 15px; /* Mejor experiencia táctil */
+    padding: 8px; /* Espacio más pequeño en la barra inferior */
+  }
+
+  #chat-item {
+    padding: 8px 10px; /* Ajuste de padding en los chats */
+  }
+
+  #avatar {
+    width: 40px; /* Avatar más pequeño para pantallas pequeñas */
+    height: 40px;
+  }
+
+  #chat-name {
+    font-size: 12px; /* Mejor tamaño de fuente para nombres en pantallas pequeñas */
+  }
+
+  #chat-message {
+    font-size: 12px; /* Mejor tamaño de fuente para mensajes en pantallas pequeñas */
+  }
+
+  /* Ajustes para el contenedor de búsqueda */
+  #search-container {
+    width: 120px; /* Un poco más pequeño para pantallas muy pequeñas */
+  }
+
+  #search-container.expanded {
+    width: 180px;
   }
 }

@@ -234,12 +234,13 @@ body {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
   z-index: 999;
-  display: block; /* Asegura que el overlay sea visible cuando se activa */
+  display: none;
   opacity: 0; /* Comienza invisible */
   transition: opacity 0.3s ease-out; /* Desvanecimiento suave */
 }
 
 #overlay.active {
+  display: block; /* Muestra el overlay cuando está activo */
   opacity: 1; /* Aumenta la opacidad cuando se activa */
 }
 
@@ -291,114 +292,148 @@ body {
   transform: rotate(90deg); /* Rota el icono del menú cuando el sidebar está activo */
 }
 
-@media (max-width: 768px) {
-  #sidebar {
-    width: 60%; /* Aumentar el ancho del sidebar para pantallas medianas */
+@media screen and (max-width: 768px) {
+  /* Ajustar la cabecera */
+  #header {
+    flex-direction: column;
+    padding: 8px 10px;
   }
 
   #title {
-    font-size: 24px; /* Título un poco más grande */
+    font-size: 24px; /* Reducir el tamaño del título en pantallas pequeñas */
   }
 
-  #profile-picture {
-    width: 60px; /* Ajuste del tamaño de la imagen de perfil */
-    height: 60px;
-  }
-
-  #user-name {
-    font-size: 16px; /* Tamaño de fuente más grande para el nombre */
-  }
-
-  #menu li {
-    font-size: 14px; /* Ajuste del tamaño de los elementos del menú */
-  }
-
-  #bottom-nav {
-    padding: 10px; /* Un poco más de espacio en el fondo */
+  /* Chat */
+  #chat-container {
+    height: calc(100vh - 60px); /* Ajustar el tamaño del contenedor de chat */
   }
 
   #chat-item {
-    padding: 10px 12px; /* Aumento del padding para una mejor interacción */
-  }
-
-  #avatar {
-    width: 48px; /* Ajuste del avatar para que sea más visible */
-    height: 48px;
+    padding: 8px 10px;
   }
 
   #chat-name {
-    font-size: 14px; /* Tamaño de fuente más grande para el nombre del chat */
+    font-size: 12px; /* Reducir el tamaño del nombre */
+  }
+
+  #chat-time {
+    font-size: 10px; /* Reducir el tamaño del tiempo */
   }
 
   #chat-message {
-    font-size: 14px; /* Un poco más grande para una mejor lectura */
+    font-size: 12px; /* Reducir el tamaño del mensaje */
   }
 
-  /* Ajuste para la barra de búsqueda */
+  #unread-count {
+    font-size: 10px; /* Reducir el tamaño del contador */
+    padding: 1px 4px; /* Reducir el padding */
+  }
+
+  /* Botones y Navbar */
+  #bottom-nav {
+    flex-direction: column;
+    padding: 10px 0;
+  }
+
   #search-container {
-    width: 150px; /* Ajuste del tamaño para pantallas medianas */
+    width: 40px;
+    transition: none;
   }
 
   #search-container.expanded {
-    width: 200px;
+    width: 150px;
+  }
+
+  #sidebar {
+    width: 250px; /* Reducir el tamaño del sidebar */
+    padding: 15px;
+  }
+
+  #menu li {
+    font-size: 14px; /* Reducir el tamaño de los elementos del menú */
+    margin: 10px 0;
+  }
+
+  /* Ajustar la visibilidad y la animación del menú */
+  #menu li {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  #sidebar.active #menu li {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Cambiar comportamiento de la barra lateral */
+  #sidebar.active {
+    left: 0;
+  }
+
+  #overlay.active {
+    display: block;
+    opacity: 1;
+  }
+
+  #overlay {
+    opacity: 0;
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  #header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px; /* Un poco más de espacio alrededor del encabezado */
-  }
-
+@media screen and (max-width: 480px) {
+  /* Ajuste más estricto para pantallas pequeñas (móviles) */
   #title {
-    font-size: 20px; /* Ajuste del tamaño del título para pantallas pequeñas */
-  }
-
-  #chat-name {
-    font-size: 12px; /* Tamaño adecuado para nombres de chat */
-  }
-
-  #chat-message {
-    font-size: 12px; /* Un poco más grande en pantallas pequeñas */
-  }
-
-  #menu li {
-    font-size: 12px; /* Ajuste del tamaño del texto de los menús */
-  }
-
-  #profile-picture {
-    width: 50px; /* Ajuste del tamaño de la imagen de perfil */
-    height: 50px;
-  }
-
-  #bottom-nav {
-    padding: 8px; /* Espacio más pequeño en la barra inferior */
+    font-size: 20px; /* Más pequeño en móviles */
   }
 
   #chat-item {
-    padding: 8px 10px; /* Ajuste de padding en los chats */
-  }
-
-  #avatar {
-    width: 40px; /* Avatar más pequeño para pantallas pequeñas */
-    height: 40px;
+    padding: 6px 8px; /* Más pequeño */
   }
 
   #chat-name {
-    font-size: 12px; /* Mejor tamaño de fuente para nombres en pantallas pequeñas */
+    font-size: 10px; /* Aún más pequeño */
+  }
+
+  #chat-time {
+    font-size: 8px; /* Aún más pequeño */
   }
 
   #chat-message {
-    font-size: 12px; /* Mejor tamaño de fuente para mensajes en pantallas pequeñas */
+    font-size: 10px; /* Aún más pequeño */
   }
 
-  /* Ajustes para el contenedor de búsqueda */
   #search-container {
-    width: 120px; /* Un poco más pequeño para pantallas muy pequeñas */
+    width: 35px;
+  }
+
+  #sidebar {
+    width: 200px; /* Reducir aún más el tamaño del sidebar */
+  }
+
+  #menu li {
+    font-size: 12px; /* Hacer más pequeño el tamaño de los elementos del menú */
+  }
+
+  #bottom-nav {
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding: 8px 0;
+  }
+
+  /* Evitar que se superpongan los elementos */
+  #chat-container {
+    height: calc(100vh - 80px); /* Ajustar para no desbordar */
+  }
+
+  /* Menú lateral más compacto */
+  .menu-icon {
+    font-size: 20px;
   }
 
   #search-container.expanded {
-    width: 180px;
+    width: 120px; /* Hacer que la caja de búsqueda sea más pequeña */
   }
 }

@@ -240,7 +240,7 @@ async function loadSidebarUserData(currentUserId) {
       loadSidebarUserData(currentUserId);
     } else {
       console.log("Usuario no autenticado.");
-      window.location.href = "../index.html";
+      window.location.href = "../auth/login/login.html";
     }
   });
   
@@ -250,3 +250,81 @@ async function loadSidebarUserData(currentUserId) {
     }
   });
   
+  async function searchUsersByName(searchTerm, currentUserId) {
+    const usersSnapshot = await getDocs(collection(db, "users"));
+    const users = [];
+
+    for (const userDoc of usersSnapshot.docs) {
+        const userData = userDoc.data();
+        const userId = userDoc.id;
+
+        // Omitir al usuario actual
+        if (userId === currentUserId) continue;
+
+        // Compara el nombre del usuario con el término de búsqueda
+        if (userData.name && userData.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+            const messagesSnapshot = await getDocs(collection(db, "messages"));
+            let lastMessage = null;
+            let unreadCount = 0;
+
+            messagesSnapshot.forEach((doc) => {
+                const message = doc.data();
+
+                if (
+                    (message.receiver === currentUserId && message.sender === userId) ||
+                    (message.sender === currentUserId && message.receiver === userId)
+                ) {
+                    if (!lastMessage || (message.time && message.time > lastMessage.time)) {
+                        lastMessage = message;
+                    }
+
+                    if (message.receiver === currentUserId && !message.read) {
+                        unreadCount++;
+                    }
+                }
+            });
+
+            users.push({
+                id: userId,
+                ...userData,
+                lastMessage,
+                unreadCount,
+            });
+        }
+    }
+
+    users.sort((a, b) => {
+        const timeA = a.lastMessage?.time ? a.lastMessage.time.seconds : 0;
+        const timeB = b.lastMessage?.time ? b.lastMessage.time.seconds : 0;
+        return timeB - timeA;
+    });
+
+    return users;
+}
+
+  // Manejo del cuadro de búsqueda
+const searchInput = document.getElementById("search-input");
+
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const currentUserId = user.uid;
+
+        searchInput.addEventListener("input", async (event) => {
+            const searchTerm = event.target.value;
+
+            // Si no hay búsqueda, carga todos los usuarios
+            if (searchTerm.trim() === "") {
+                const users = await fetchUsers(currentUserId);
+                renderUsers(users, currentUserId);
+                return;
+            }
+
+            // Realiza la búsqueda
+            const filteredUsers = await searchUsersByName(searchTerm, currentUserId);
+            renderUsers(filteredUsers, currentUserId);
+        });
+    } else {
+        console.log("Usuario no autenticado.");
+        window.location.href = "../index.html";
+    }
+});

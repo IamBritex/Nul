@@ -2,42 +2,259 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NUL - Conecta, Colabora y Crea</title>
-    <script type="module" src="script.js"></script>
+    <title>NUL - Connect, Chat, Enjoy</title>
     <style>
-        /* Estilo del navbar y el resto */
+        @font-face {
+            font-family: 'nothing';
+            src: url('../fonts/nothing/nothing-font-5x7.ttf') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'oxigen';
+            src: url('../fonts/oxigen/OxygenMono-Regular.ttf') format('truetype');
+        }
+
+        :root {
+            --background-general: #07080a;
+            --borders: #15151f;
+            --background-buttons: #1C2022;
+            --secondary-color: #CE262C;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'oxigen', monospace;
+            color: white;
+            background-color: var(--background-general);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: var(--borders);
+        }
+
+        .logo {
+            font-family: 'nothing', monospace;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .auth-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .auth-display a, .auth-display button {
+            background-color: var(--background-buttons);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-family: 'oxigen', monospace;
+            transition: background-color 0.3s ease;
+        }
+
+        .auth-display a:hover, .auth-display button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        main {
+            text-align: center;
+            padding: 50px;
+        }
+
+        .hero {
+            background-color: var(--borders);
+            padding: 50px 20px;
+            border-radius: 10px;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'oxigen', monospace;
+            background-color: var(--background-buttons);
+            color: white;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .hero-buttons a:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 0 40px;
+        }
+
+        .feature {
+            background-color: var(--background-buttons);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            animation: slideUp 0.7s ease-out;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--borders);
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-buttons a {
+                display: block;
+                margin: 10px auto;
+            }
+        }
     </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDidRLWFRYqlXWfacV9Rdn2ErkfFJ9iCgw",
+            authDomain: "chat-app-ccc84.firebaseapp.com",
+            projectId: "chat-app-ccc84",
+            storageBucket: "chat-app-ccc84.appspot.com",
+            messagingSenderId: "991015329906",
+            appId: "1:991015329906:web:d0bb02133b8de1a52c62eb",
+            measurementId: "G-3X6LV0DT7P"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const userDisplay = document.getElementById("user-display");
+
+            const renderUser = (user) => {
+                if (user) {
+                    return `
+                        <a href="./home/chats.html" class="auth-button">Abrir en tu navegador</a>
+                        <img src="${user.profilePicture}" alt="Foto de perfil" class="profile-pic" />
+                    `;
+                } else {
+                    return `<a href="./auth/login/login.html" class="auth-button">Iniciar sesión</a>`;
+                }
+            };
+
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    const userDoc = doc(db, "users", user.uid);
+                    const userSnapshot = await getDoc(userDoc);
+                    if (userSnapshot.exists()) {
+                        const userData = userSnapshot.data();
+                        userDisplay.innerHTML = renderUser(userData);
+                    } else {
+                        userDisplay.textContent = "Error: Usuario no encontrado";
+                    }
+                } else {
+                    userDisplay.innerHTML = renderUser(null);
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-
-<nav>
-    <div class="nav-container">
-        <img src="logo.png" alt="Logo" class="logo">
-        <ul class="nav-links">
-            <li><a href="#">Nul</a></li>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Descargas</a></li>
-            <li><a id="open-nul-btn" href="#">Abrir ahora</a></li>
-        </ul>
-        <div id="user-display" class="user-display"></div>
-    </div>
-</nav>
-
-<header>
-    <h1>Nul, chatea con tus amigos</h1>
-    <p>Imagina un mundo donde todas tus conversaciones están perfectamente conectadas. Tecnología que simplemente funciona. De la que no tienes que preocuparte. Que se siente como si nada (¿sí me entiendes?)</p>
-    <div class="buttons">
-        <a href="#">Descargar para Windows</a>
-        <a id="open-nul-btn-duplicate" href="#">Abrir NUL en tu navegador</a>
-    </div>
-</header>
-
-<footer>
-    <p>&copy; 2025 NUL. Todos los derechos reservados.</p>
-</footer>
-
+    <header>
+        <div class="logo">NUL</div>
+        <nav>
+            <ul>
+                <li><a href="#features">Créditos Premium</a></li>
+                <li><a href="#issues">Issues</a></li>
+                <li><a href="#support">Soporte</a></li>
+            </ul>
+            <div id="user-display" class="auth-display">
+                <!-- Rendered dynamically by Firebase -->
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Conéctate, Chatea y Disfruta con NUL</h1>
+            <p>Tu aplicación favorita para mantenerte conectado con amigos y comunidades.</p>
+            <div class="hero-buttons">
+                <a id="open-nul-btn" href="home/chats.html">Abrir en navegador</a>
+            </div>
+        </section>
+        <section id="features">
+            <h2>¿Por qué elegir NUL?</h2>
+            <div class="features-grid">
+                <div class="feature">
+                    <h3>Comunicación sin interrupciones</h3>
+                    <p>Chatea, llama y comparte en tiempo real.</p>
+                </div>
+                <div class="feature">
+                    <h3>Personalización</h3>
+                    <p>Hazlo tuyo con temas y configuraciones personalizadas.</p>
+                </div>
+                <div class="feature">
+                    <h3>Seguro</h3>
+                    <p>Privacidad garantizada. Tu información está segura con nosotros.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 NUL. Todos los derechos reservados.</p>
+    </footer>
 </body>
 </html>
